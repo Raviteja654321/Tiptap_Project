@@ -1,33 +1,10 @@
 import React from 'react';
-import { EditorContent, useEditor } from '@tiptap/react';
+import {useEditor } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
-import Paragraph from '@tiptap/extension-paragraph';
+// import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
-// import { CustomTable, CustomTableRow, CustomTableHeader, CustomTableCell } from './CustomTable';
-
-const tableStyles = {
-  borderCollapse: 'collapse',
-  margin: '0',
-  overflow: 'hidden',
-  tableLayout: 'fixed',
-  width: '100%',
-};
-
-const cellStyles = {
-  border: '2px solid #ced4da',
-  boxSizing: 'border-box',
-  minWidth: '1em',
-  padding: '3px 5px',
-  position: 'relative',
-  verticalAlign: 'top',
-};
-
-const headerStyles = {
-  backgroundColor: '#f1f3f5',
-  fontWeight: 'bold',
-  textAlign: 'left',
-};
+import { CustomTable, CustomTableRow, CustomTableHeader, CustomTableCell ,CustomParagraph} from './CustomTable.js';
 
 const tableWrapperStyles = {
   padding: '1rem 0',
@@ -38,13 +15,14 @@ const Tiptap = () => {
   const editor = useEditor({
     extensions: [
       Document,
-      Paragraph,
+      // Paragraph,
       Text,
       Gapcursor,
-      // CustomTable,
-      // CustomTableRow,
-      // CustomTableHeader,
-      // CustomTableCell,
+      CustomTable,
+      CustomTableRow,
+      CustomTableHeader,
+      CustomTableCell,
+      CustomParagraph,
     ],
     content: `
     `,
@@ -53,24 +31,26 @@ const Tiptap = () => {
   if (!editor) {
     return null;
   }
-
+  console.log("Hello")
   return (
     <div style={tableWrapperStyles}>
-      <table style={tableStyles} contentEditable="true">
+      <p>Hello all</p>
+      <table>
         <tbody>
           <tr>
-            <th style={headerStyles}>Name</th>
-            <th style={headerStyles} colSpan="3">Description</th>
+            <th>Name</th>
+            <th>Description</th>
           </tr>
           <tr>
-            <td style={cellStyles}>Cyndi Lauper</td>
-            <td style={cellStyles}>singer</td>
-            <td style={cellStyles}>songwriter</td>
-            <td style={cellStyles}>actress</td>
+            <td>Cyndi Lauper</td>
+            <td>singer, songwriter, actress</td>
+          </tr>
+          <tr>
+            <td>Bob Dylan</td>
+            <td>singer-songwriter, musician</td>
           </tr>
         </tbody>
       </table>
-      <EditorContent editor={editor} />
     </div>
   );
 };
