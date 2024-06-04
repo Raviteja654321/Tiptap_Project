@@ -56,7 +56,7 @@ const Tiptap = () => {
 
   return (
     <div style={tableWrapperStyles}>
-      <table style={tableStyles}>
+      <table style={tableStyles} contentEditable="true">
         <tbody>
           <tr>
             <th style={headerStyles}>Name</th>
