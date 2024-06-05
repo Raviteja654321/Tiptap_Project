@@ -1,11 +1,14 @@
-import React from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
-import Document from '@tiptap/extension-document';
-import Gapcursor from '@tiptap/extension-gapcursor';
-import Paragraph from '@tiptap/extension-paragraph';
-import Text from '@tiptap/extension-text';
+import './styles.css'
+import React from 'react'
+import { useEditor, EditorContent } from '@tiptap/react'
+import Document from '@tiptap/extension-document'
+import Gapcursor from '@tiptap/extension-gapcursor'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
 import Table from '@tiptap/extension-table'
-import { CustomTableRow, CustomTableHeader, CustomTableCell} from './CustomTable.js';
+import TableRow from '@tiptap/extension-table-row';
+
+import { CustomTableHeader, CustomTableCell } from './CustomTable.js';
 
 const tableWrapperStyles = {
     padding: '1rem 0',
@@ -21,10 +24,10 @@ const Tiptap = () => {
             Text,
             Gapcursor,
             Table,
+            TableRow,
             // Table.configure({
             //     resizable: true,
             // }),
-            CustomTableRow,
             CustomTableHeader,
             CustomTableCell,
         ],
@@ -35,10 +38,10 @@ const Tiptap = () => {
         return null;
     }
     return (
-        <div >
-        <button onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}>
-            insertTable
-        </button>
+        <div>
+            <button onClick={() => editor.chain().focus().insertTable({ rows: 4, cols: 3, withHeaderRow: true }).run()}>
+                insertTable
+            </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
         </div>
