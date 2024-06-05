@@ -1,21 +1,6 @@
-import Table from "@tiptap/extension-table";
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
-
-const CustomTable = Table.extend({
-    addAttributes() {
-        return {
-            color: {
-                renderHTML: (attributes) => {
-                    return {
-                        style: 'border-collapse: collapse; width: 100%;'
-                    };
-                },
-            },
-        };
-    },
-});
 
 const CustomTableRow = TableRow.extend({
     addAttributes() {
@@ -40,7 +25,7 @@ const CustomTableCell = TableCell.extend({
                     return {
                         style: `
                             border: 1px solid #ced4da;
-                            padding: 8px;
+                            padding: 8px; 
                             min-width: ${attributes.width};
                             width: ${attributes.width};
                             position: relative;
@@ -92,4 +77,4 @@ const CustomTableHeader = TableHeader.extend({
     },
 });
 
-export { CustomTable, CustomTableRow, CustomTableHeader, CustomTableCell };
+export {CustomTableRow, CustomTableHeader, CustomTableCell };
