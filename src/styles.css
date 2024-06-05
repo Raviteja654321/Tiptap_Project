@@ -1,15 +1,12 @@
-.tiptap {
-  table {
-      .column-resize-handle {
-          background-color: #adf;
-          bottom: -2px;
-          position: absolute;
-          right: -2px;
-          pointer-events: none;
-          top: 0;
-          width: 4px;
-      }
-  }
+/* styles.css */
+.column-resize-handle {
+  background-color: #adf;
+  bottom: -2px;
+  position: absolute;
+  right: -3px;
+  pointer-events: none;
+  top: 0;
+  width: 2px;
 }
 
 .resize-cursor {

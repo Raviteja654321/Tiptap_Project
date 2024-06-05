@@ -10,9 +10,7 @@ const CustomTableCell = TableCell.extend({
                     return {
                         style: `
                             border: 1px solid #ced4da;
-                            padding: 8px;
                             min-width: ${attributes.width};
-                            width: ${attributes.width};
                             position: relative;
                             vertical-align: top;
                             height: auto;
@@ -33,14 +31,13 @@ const CustomTableHeader = TableHeader.extend({
                 renderHTML: (attributes) => {
                     return {
                         style: `
-                            background-color: #262626;
+                            margin: 100px;
+                            background-color: Black;
                             color: #ffffff;
                             font-weight: bold;
                             text-align: center;
                             border: 1px solid #ced4da;
-                            padding: 8px;
                             min-width: ${attributes.width};
-                            width: ${attributes.width};
                             position: relative;
                             vertical-align: top;
                         `
