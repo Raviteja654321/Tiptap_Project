@@ -1,7 +1,7 @@
 /* styles.css */
 .column-resize-handle {
   background-color: #adf;
-  bottom: -2px;
+  bottom: 1px;
   position: absolute;
   right: -3px;
   pointer-events: none;
@@ -12,4 +12,8 @@
 .resize-cursor {
   cursor: ew-resize;
   cursor: col-resize;
+}
+
+.table-cell.focused{
+  background-color: aquamarine;
 }

@@ -1,5 +1,6 @@
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
+import { ReactNodeViewRenderer } from '@tiptap/react';
 
 const CustomTableCell = TableCell.extend({
     addAttributes() {
@@ -10,14 +11,13 @@ const CustomTableCell = TableCell.extend({
                     return {
                         style: `
                             border: 1px solid #ced4da;
-                            min-width: ${attributes.width};
                             position: relative;
-                            vertical-align: top;
                             height: auto;
-                        `
+                        `,
+                        class: `table-cell`
                     };
                 },
-                parseHTML: (element) => element.style.width.replace('px', '')
+                parseHTML: (element) => element.style.width.replace('px', ''),
             },
         };
     },
@@ -31,15 +31,13 @@ const CustomTableHeader = TableHeader.extend({
                 renderHTML: (attributes) => {
                     return {
                         style: `
-                            margin: 100px;
-                            background-color: Black;
+                            background-color: #2D323B;
                             color: #ffffff;
                             font-weight: bold;
                             text-align: center;
                             border: 1px solid #ced4da;
-                            min-width: ${attributes.width};
                             position: relative;
-                            vertical-align: top;
+                            width: ${attributes.width};
                         `
                     };
                 },
