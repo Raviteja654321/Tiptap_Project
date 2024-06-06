@@ -1,6 +1,7 @@
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
 import { ReactNodeViewRenderer } from '@tiptap/react';
+import Popover from './Popover';
 
 const CustomTableCell = TableCell.extend({
     addAttributes() {
@@ -14,13 +15,16 @@ const CustomTableCell = TableCell.extend({
                             position: relative;
                             height: auto;
                         `,
-                        class: `table-cell`
+                        class: 'table-cell'
                     };
                 },
                 parseHTML: (element) => element.style.width.replace('px', ''),
             },
         };
     },
+    addNodeView() {
+        return ReactNodeViewRenderer(Popover);
+    }
 });
 
 const CustomTableHeader = TableHeader.extend({

@@ -1,27 +1,10 @@
+import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
 import React, { useState } from 'react';
-// const Popover = ({ editor, cellView }) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFill, faEraser, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown ,faCaretSquareRight} from '@fortawesome/free-solid-svg-icons';
+
 const Popover = ({ editor }) => {
     const [showDropdown, setShowDropdown] = useState(false);
-
-    // useEffect(() => {
-    //     const updatePopoverPosition = () => {
-    //         if (!popoverRef.current || !cellView) return;
-    //         const rect = cellView.dom.getBoundingClientRect();
-    //         console.log('Cell rect:', rect); 
-    //         popoverRef.current.style.left = `${rect.left + window.pageXOffset}px`;
-    //         popoverRef.current.style.top = `${rect.top + window.pageYOffset}px`;
-    //     };
-
-    //     updatePopoverPosition();
-
-    //     window.addEventListener('scroll', updatePopoverPosition);
-    //     window.addEventListener('resize', updatePopoverPosition);
-
-    //     return () => {
-    //         window.removeEventListener('scroll', updatePopoverPosition);
-    //         window.removeEventListener('resize', updatePopoverPosition);
-    //     };
-    // }, [cellView]);
 
     const handleBackgroundColorChange = (color) => {
         editor.chain().focus().setCellAttribute('backgroundColor', color).run();
@@ -56,24 +39,68 @@ const Popover = ({ editor }) => {
     };
 
     return (
-        <div className="dropdown" style={{display: "flex"}}>
-            <button style={{}} onClick={()=>setShowDropdown(!showDropdown)}>v</button>
-            { showDropdown &&
-                <ul style={{backgroundColor: "#282E33", width: "fit-content", margin: "0 1.5rem", padding: "0.75rem 1.25rem",  listStyle: 'none', position: "absolute", borderRadius: "0.25rem"}}>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={() => handleBackgroundColorChange('#ffffff')}>White</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={() => handleBackgroundColorChange('#f0f0f0')}>Light Gray</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={() => handleBackgroundColorChange('#e0e0e0')}>Gray</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={clearCell}>Clear Cell</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={deleteRow}>Delete Row</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={deleteColumn}>Delete Column</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={addRowBefore}>Add Row Above</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={addRowAfter}>Add Row Below</button></li>
-                    <li style={{borderBottom: "1px solid grey", textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={addColumnBefore}>Add Column Left</button></li>
-                    <li style={{                                textAlign: 'center'}}><button style={{ background: "transparent", border: "none", color: "#B7C3CF"}} onClick={addColumnAfter}>Add Column Right</button></li>
-                </ul>
+        <NodeViewWrapper className="react-component-with-content" style={{ display: "flex", width: 'fit-content', position: 'relative' }}>
+            <button className="label" onClick={() => setShowDropdown(!showDropdown)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#B7C3CF' }}>
+                <FontAwesomeIcon icon={!showDropdown? faCaretSquareDown: faCaretSquareRight} />
+            </button>
+            {showDropdown &&
+                <div className="dropdown-container">
+                    <ul className="popover-list">
+                        <li>
+                            <button onClick={() => handleBackgroundColorChange('#ffffff')}>
+                                <FontAwesomeIcon icon={faFill} style={{marginRight: '0.5rem'}}  /> White
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={() => handleBackgroundColorChange('#f0f0f0')}>
+                                <FontAwesomeIcon icon={faFill} style={{marginRight: '0.5rem'}} /> Light Gray
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={() => handleBackgroundColorChange('#e0e0e0')}>
+                                <FontAwesomeIcon icon={faFill} style={{marginRight: '0.5rem'}} /> Gray
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={clearCell}>
+                                <FontAwesomeIcon icon={faEraser} style={{marginRight: '0.5rem'}} /> Clear Cell
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={deleteRow}>
+                                <FontAwesomeIcon icon={faTrashAlt} style={{marginRight: '0.5rem'}} /> Delete Row
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={deleteColumn}>
+                                <FontAwesomeIcon icon={faTrashAlt} style={{marginRight: '0.5rem'}} /> Delete Column
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={addRowBefore}>
+                                <FontAwesomeIcon icon={faArrowUp} style={{marginRight: '0.5rem'}} /> Add Row Above
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={addRowAfter}>
+                                <FontAwesomeIcon icon={faArrowDown} style={{marginRight: '0.5rem'}} /> Add Row Below
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={addColumnBefore}>
+                                <FontAwesomeIcon icon={faArrowLeft} style={{marginRight: '0.5rem'}} /> Add Column Left
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={addColumnAfter}>
+                                <FontAwesomeIcon icon={faArrowRight} style={{marginRight: '0.5rem'}} /> Add Column Right
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             }
-        </div>
-
+            <NodeViewContent className="content" style={{ display: "flex", width: 'fit-content' }} />
+        </NodeViewWrapper>
     );
 };
 

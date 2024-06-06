@@ -1,19 +1,16 @@
-import "./styles.css";
-
+import './styles.css'
 import React, { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
-
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import Paragraph from '@tiptap/extension-paragraph';
-// import Focus from '@tiptap/extension-focus';
 import Text from '@tiptap/extension-text';
-import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
+import Table from '@tiptap/extension-table';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
 import { CustomTableHeader, CustomTableCell } from './CustomTable.js';
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import Focus from '@tiptap/extension-focus'
+import Focus from '@tiptap/extension-focus';
 import Popover from "./Popover.jsx";
 
 const tableWrapperStyles = {
@@ -38,9 +35,9 @@ const Tiptap = () => {
                 resizable: true,
             }),
             TableRow,
-            TableCell,
             TableHeader,
             CustomTableHeader,
+            TableCell,
             CustomTableCell,
         ],
         content: '',
@@ -61,7 +58,7 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <Popover/>
+            <Popover />
             <div>
                 <h3>Editor Content (HTML):</h3>
                 <pre>{htmlContent}</pre>
