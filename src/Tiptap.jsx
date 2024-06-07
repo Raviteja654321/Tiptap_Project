@@ -6,17 +6,16 @@ import Gapcursor from '@tiptap/extension-gapcursor';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import TableRow from '@tiptap/extension-table-row';
-import Table from '@tiptap/extension-table';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
-import { CustomTableHeader, CustomTableCell } from './CustomTable.js';
-import Focus from '@tiptap/extension-focus';
+import {CustomTable, CustomTableHeader, CustomTableCell } from './CustomTable.js';
 import Popover from "./Popover.jsx";
 
 const tableWrapperStyles = {
     padding: '1rem 0',
     border: '2px solid #ced4da',
     overflowX: 'auto',
+    height: '80vh'
 };
 
 const Tiptap = () => {
@@ -27,13 +26,8 @@ const Tiptap = () => {
             Document,
             Paragraph,
             Text,
-            Focus.configure({
-                className: 'focused',
-            }),
             Gapcursor,
-            Table.configure({
-                resizable: true,
-            }),
+            CustomTable,
             TableRow,
             TableHeader,
             CustomTableHeader,

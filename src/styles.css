@@ -1,3 +1,7 @@
+/* table{
+  border-collapse: collapse;
+} */
+
 .column-resize-handle {
   background-color: #adf;
   bottom: 1px;
@@ -13,17 +17,8 @@
   cursor: col-resize;
 }
 
-.table-cell.focused {
-  background-color: aquamarine;
-}
-
-.react-component-with-content .label {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #B7C3CF;
-  font-size: 1rem;
-  padding: 0.5rem;
+.node-tableCell .focused{
+  background-color: rgb(79, 158, 131);
 }
 
 .react-component-with-content .dropdown-container {
@@ -31,14 +26,15 @@
   background-color: #282E33;
   border-radius: 0.5rem;
   padding: 0.1rem 0.5rem;
-  margin: 0 1.5rem;
+  right: -152px;
   white-space: nowrap;
+  z-index: 2;
 }
 
 .react-component-with-content .popover-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0; 
 }
 
 .react-component-with-content .popover-list li {
