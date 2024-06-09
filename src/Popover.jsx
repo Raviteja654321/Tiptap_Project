@@ -3,33 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFill, faEraser, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
+
 const Popover = ({ updateAttributes, node, getPos, selected, editor }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [showColors, setShowColors] = useState(false);
     const [focusedCell, setFocusedCell] = useState(false);
-
-    const calculateIfTableCellActive = () => {
-        const { from, to } = editor.state.selection;
-        const nodeFrom = getPos();
-        const nodeTo = nodeFrom + node.nodeSize;
-        setFocusedCell(nodeFrom <= from && to <= nodeTo);
-    };
-
-    useEffect(() => {
-        updateAttributes({
-            colspan: node.attrs.colspan,
-            rowspan: node.attrs.rowspan,
-            colwidth: node.attrs.colwidth,
-        });
-    }, [updateAttributes, node.attrs.colspan, node.attrs.rowspan, node.attrs.colwidth]);
-
-    useEffect(() => {
-        editor.on('selectionUpdate', calculateIfTableCellActive);
-        setTimeout(calculateIfTableCellActive, 100);
-        return () => {
-            editor.off('selectionUpdate', calculateIfTableCellActive);
-        };
-    }, [editor]);
 
     const handleBackgroundColorChange = (color) => {
         editor.chain().focus().setCellAttribute('background-color', color).run();
@@ -64,21 +42,7 @@ const Popover = ({ updateAttributes, node, getPos, selected, editor }) => {
     };
 
     return (
-        <NodeViewWrapper
-            as="td"
-            className="react-component-with-content"
-            onMouseLeave={() => setShowDropdown(false)}
-            style={{
-                display: 'flex',
-                width: '100%',
-                position: 'relative',
-                border: '1px solid #ced4da',
-                height: 'auto',
-                margin: '0',
-                padding: '0',
-            }}
-        >
-            <NodeViewContent className="content" style={{ display: 'flex', width: 'fit-content', margin: '0', padding: '0' }} />
+        <>
             {focusedCell && (
                 <button
                     className="label"
@@ -165,7 +129,8 @@ const Popover = ({ updateAttributes, node, getPos, selected, editor }) => {
                     </ul>
                 </div>
             )}
-        </NodeViewWrapper>
+            <button>Hello</button>
+        </>
     );
 };
 
