@@ -1,14 +1,38 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFill, faEraser, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
-const Popover = ({ editor, selected }) => {
+const Popover = ({ updateAttributes, node, getPos, selected, editor }) => {
     const [showDropdown, setShowDropdown] = useState(false);
-    const [isfocused, setIsfocused] = useState(false);
+    const [showColors, setShowColors] = useState(false);
+    const [focusedCell, setFocusedCell] = useState(false);
+
+    const calculateIfTableCellActive = () => {
+        const { from, to } = editor.state.selection;
+        const nodeFrom = getPos();
+        const nodeTo = nodeFrom + node.nodeSize;
+        setFocusedCell(nodeFrom <= from && to <= nodeTo);
+    };
+
+    useEffect(() => {
+        updateAttributes({
+            colspan: node.attrs.colspan,
+            rowspan: node.attrs.rowspan,
+            colwidth: node.attrs.colwidth,
+        });
+    }, [updateAttributes, node.attrs.colspan, node.attrs.rowspan, node.attrs.colwidth]);
+
+    useEffect(() => {
+        editor.on('selectionUpdate', calculateIfTableCellActive);
+        setTimeout(calculateIfTableCellActive, 100);
+        return () => {
+            editor.off('selectionUpdate', calculateIfTableCellActive);
+        };
+    }, [editor]);
 
     const handleBackgroundColorChange = (color) => {
-        editor.chain().focus().setCellAttribute('backgroundColor', color).run();
+        editor.chain().focus().setCellAttribute('background-color', color).run();
     };
 
     const clearCell = () => {
@@ -39,24 +63,23 @@ const Popover = ({ editor, selected }) => {
         editor.chain().focus().addColumnAfter().run();
     };
 
-    // if (editor) {
-    //     console.log("The cell is selected.");
-    // }
-
     return (
         <NodeViewWrapper
+            as="td"
             className="react-component-with-content"
-            onMouseEnter = {() => setIsfocused(true)}
-            onMouseLeave = {() => {setIsfocused(false); setShowDropdown(false)}}
+            onMouseLeave={() => setShowDropdown(false)}
             style={{
-                display: "flex",
+                display: 'flex',
                 width: '100%',
                 position: 'relative',
                 border: '1px solid #ced4da',
-                height: 'auto'
-            }}>
-            <NodeViewContent className="content" style={{ display: "flex", width: 'fit-content', margin: '0', padding: '0' }} />
-            {isfocused &&  (
+                height: 'auto',
+                margin: '0',
+                padding: '0',
+            }}
+        >
+            <NodeViewContent className="content" style={{ display: 'flex', width: 'fit-content', margin: '0', padding: '0' }} />
+            {focusedCell && (
                 <button
                     className="label"
                     onClick={() => setShowDropdown(!showDropdown)}
@@ -67,29 +90,42 @@ const Popover = ({ editor, selected }) => {
                         color: '#B7C3CF',
                         width: 'fit-content',
                         position: 'absolute',
-                        right: '0px'
+                        right: '0px',
                     }}
                 >
-                    <FontAwesomeIcon icon={!showDropdown ? faCaretSquareDown : faCaretSquareRight} />
+                    <FontAwesomeIcon icon={showDropdown ? faCaretSquareDown : faCaretSquareRight} />
                 </button>
             )}
             {showDropdown && (
                 <div className="dropdown-container">
                     <ul className="popover-list">
-                        <li>
-                            <button onClick={() => handleBackgroundColorChange('#ffffff')}>
-                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> White
+                        <li
+                            className="background-color-dropdown"
+                            onMouseEnter={() => setShowColors(true)}
+                            onMouseLeave={() => setShowColors(false)}
+                        >
+                            <button>
+                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> Background Color
                             </button>
-                        </li>
-                        <li>
-                            <button onClick={() => handleBackgroundColorChange('#f0f0f0')}>
-                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> Light Gray
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={() => handleBackgroundColorChange('#e0e0e0')}>
-                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> Gray
-                            </button>
+                            {showColors && (
+                                <ul className="dropdown-content">
+                                    <li>
+                                        <button onClick={() => handleBackgroundColorChange('#ffffff')}>
+                                            <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> White
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onClick={() => handleBackgroundColorChange('#f0f0f0')}>
+                                            <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> Light Gray
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button onClick={() => handleBackgroundColorChange('#e0e0e0')}>
+                                            <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> Gray
+                                        </button>
+                                    </li>
+                                </ul>
+                            )}
                         </li>
                         <li>
                             <button onClick={clearCell}>

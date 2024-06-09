@@ -1,6 +1,6 @@
-/* table{
+table{
   border-collapse: collapse;
-} */
+}
 
 .column-resize-handle {
   background-color: #adf;
@@ -17,8 +17,10 @@
   cursor: col-resize;
 }
 
-.node-tableCell .focused{
-  background-color: rgb(79, 158, 131);
+.node-tableCell {
+  border: 0px;
+  margin: 0px;
+  padding: 1px;
 }
 
 .react-component-with-content .dropdown-container {
@@ -26,12 +28,12 @@
   background-color: #282E33;
   border-radius: 0.5rem;
   padding: 0.1rem 0.5rem;
-  right: -152px;
+  right: -145px;
   white-space: nowrap;
-  z-index: 2;
+  z-index: 1;
 }
 
-.react-component-with-content .popover-list {
+.react-component-with-content .popover-list .background-color-dropdown {
   list-style: none;
   padding: 0;
   margin: 0; 
@@ -60,4 +62,43 @@
 
 .react-component-with-content .popover-list li:last-child {
   border-bottom: none;
+}
+
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.popover-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+.background-color-dropdown:hover .dropdown-content {
+  display: block;
 }

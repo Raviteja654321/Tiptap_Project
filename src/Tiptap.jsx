@@ -8,8 +8,7 @@ import Text from '@tiptap/extension-text';
 import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
-import {CustomTable, CustomTableHeader, CustomTableCell } from './CustomTable.js';
-import Popover from "./Popover.jsx";
+import {CustomTable, CustomTableRow, CustomTableHeader, CustomTableCell } from './CustomTable.js';
 
 const tableWrapperStyles = {
     padding: '1rem 0',
@@ -29,6 +28,7 @@ const Tiptap = () => {
             Gapcursor,
             CustomTable,
             TableRow,
+            CustomTableRow,
             TableHeader,
             CustomTableHeader,
             TableCell,
@@ -52,7 +52,6 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <Popover />
             <div>
                 <h3>Editor Content (HTML):</h3>
                 <pre>{htmlContent}</pre>
