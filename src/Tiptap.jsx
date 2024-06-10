@@ -9,7 +9,6 @@ import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import {CustomTable, CustomTableHeader, CustomTableCell } from './CustomTable.js';
-import Popover from "./Popover.jsx";
 
 const tableWrapperStyles = {
     padding: '1rem 0',
@@ -19,7 +18,7 @@ const tableWrapperStyles = {
 };
 
 const Tiptap = () => {
-    const [htmlContent, setHtmlContent] = useState('');
+    const [htmlContent, setHtmlContent] = useState();
 
     const editor = useEditor({
         extensions: [
@@ -34,7 +33,37 @@ const Tiptap = () => {
             TableCell,
             CustomTableCell,
         ],
-        content: '',
+        content: `
+            <table>
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Place</th>
+                        <th>Animal</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>5</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>Hello</p>
+      `,
+        onCreate:({editor})=>{
+            setHtmlContent(editor.getHTML());
+        },
         onUpdate: ({ editor }) => {
             const html = editor.getHTML();
             setHtmlContent(html);
@@ -52,7 +81,6 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <Popover />
             <div>
                 <h3>Editor Content (HTML):</h3>
                 <pre>{htmlContent}</pre>

@@ -1,7 +1,7 @@
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
 import Table from '@tiptap/extension-table';
-import Popover from './Popover';
+import TableCellNodeView from './TableCellNodeView';
 import {undo,redo, history } from '@tiptap/pm/history'
 import { ReactNodeViewRenderer } from '@tiptap/react';
 import { keymap } from '@tiptap/pm/keymap';
@@ -14,22 +14,22 @@ const CustomTable = Table.extend({
             HTMLAttributes: {
                 style: `
                     border-collapse: collapse;
+                    min-width: 100px;
                 `,
             },
-            allowTableNodeSelection: true,
         }
     }
 })
 
 const CustomTableCell = TableCell.extend({
-    
     addOptions() {
         return {
             HTMLAttributes: {
                 style: `
                         position: relative;
                         height: 20px;
-                        border: 2px solid #ced4da
+                        border: 2px solid #ced4da;
+                        width: 150px;
                     `,
                 class: 'table-cell',
             }
@@ -38,30 +38,33 @@ const CustomTableCell = TableCell.extend({
 
     addAttributes() {
         return {
-            width: {
-                default: '150px',
-                renderHTML: (attributes) => ({
-                    style: `
-                        width: ${attributes.width};
-                    `,
-                }),
-                parseHTML: (element) => element.style.width.replace('px', ''),
-            },
             colwidth: {
                 default: null,
+                renderHTML: attributes => {
+                    return {
+                        colwidth: attributes.colwidth,
+                        style: attributes.style ? `width: ${attributes.colwidth}px` : null
+                    }
+                },
                 parseHTML: (element) => {
                     const colwidth = element.getAttribute("colwidth");
                     const value = colwidth ? [parseInt(colwidth, 10)] : null;
 
                     return value;
                 },
+            },
+            backgroundColor: {
+                default: null,
                 renderHTML: attributes => {
                     return {
-                        colwidth: attributes.colwidth,
-                        style: attributes.style ? `width: ${attributes.colwidth}px` : null
+                        style: attributes.backgroundColor ? `background-color: ${attributes.backgroundColor}` : null
                     }
-                }
-            },
+                },
+                parseHTML: (element) => {
+                    const backgroundColor = element.style.backgroundColor;
+                    return backgroundColor || null;
+                },
+            }
         };
     },
 
@@ -70,13 +73,15 @@ const CustomTableCell = TableCell.extend({
           history(),
           keymap({"Mod-z": undo, "Mod-y": redo})
           
-          // …
         ]
       },
     
     addNodeView() {
-        return ReactNodeViewRenderer(Popover,{as:'td'});
-    }  
+        return ReactNodeViewRenderer(TableCellNodeView,{as:'td', style: {
+            backgroundColor: 'green',
+            
+        }});
+    },
 });
 
 const CustomTableHeader = TableHeader.extend({
@@ -106,7 +111,6 @@ const CustomTableHeader = TableHeader.extend({
                         `
                     };
                 },
-                parseHTML: (element) => element.style.width.replace('px', '')
             },
         };
     },

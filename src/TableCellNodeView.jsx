@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFill, faEraser,faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
-const Popover = ({ editor, selected }) => {
+const TableCellNodeView = ({ editor, selected }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [isfocused, setIsfocused] = useState(false);
     const [showColors, setShowColors] = useState(false);
@@ -49,7 +49,8 @@ const Popover = ({ editor, selected }) => {
                 display: "flex",
                 width: '100%',
                 position: 'relative',
-                height: 'auto'
+                height: 'auto',
+                backgroundColor: 'green'
             }}>
             <NodeViewContent className="content" style={{ display: "flex", width: 'fit-content', margin: '0', padding: '0' }} />
             {isfocused && (
@@ -176,4 +177,4 @@ const Popover = ({ editor, selected }) => {
     );
 };
 
-export default Popover;
+export default TableCellNodeView;
