@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFill, faEraser,faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
-const TableCellNodeView = ({ editor, selected }) => {
+const TableCellNodeView = ({ editor, selected, node }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [isfocused, setIsfocused] = useState(false);
     const [showColors, setShowColors] = useState(false);
 
+    
     const handleBackgroundColorChange = (color) => {
         editor.chain().focus().setCellAttribute('backgroundColor', color).run();
     };
@@ -50,7 +51,6 @@ const TableCellNodeView = ({ editor, selected }) => {
                 width: '100%',
                 position: 'relative',
                 height: 'auto',
-                backgroundColor: 'green'
             }}>
             <NodeViewContent className="content" style={{ display: "flex", width: 'fit-content', margin: '0', padding: '0' }} />
             {isfocused && (

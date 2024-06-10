@@ -10,6 +10,7 @@ import { keymap } from '@tiptap/pm/keymap';
 const CustomTable = Table.extend({
     addOptions() {
         return {
+            ...this.parent?.(),
             resizable: true,
             HTMLAttributes: {
                 style: `
@@ -71,10 +72,12 @@ const CustomTableCell = TableCell.extend({
     addProseMirrorPlugins() {
         return [
           history(),
-          keymap({"Mod-z": undo, "Mod-y": redo})
-          
-        ]
-      },
+          keymap({
+            "Mod-z": undo,
+            "Mod-y": redo,
+          })
+        ];
+    },
     
     addNodeView() {
         return ReactNodeViewRenderer(TableCellNodeView,{as:'td', style: {

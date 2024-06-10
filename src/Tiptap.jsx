@@ -81,10 +81,12 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <div>
+            <div style={{ display: 'flex' }}> {/* Parent container for inline elements */}
+            <div style={{ width: '50%' }}> {/* First div with content */}
                 <h3>Editor Content (HTML):</h3>
                 <pre>{htmlContent}</pre>
             </div>
+            <div style={{ width: '50%', right: '0px' }} dangerouslySetInnerHTML={{ __html: htmlContent }} /> </div>
         </div>
     );
 };
