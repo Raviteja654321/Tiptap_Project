@@ -166,32 +166,44 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                             </button>
                         </li>
                         <li>
-                            <button onClick={deleteRow}>
+                            <button onClick={deleteRow}
+                                onMouseEnter={() => setShowColors(false)}
+                            >
                                 <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Row
                             </button>
                         </li>
                         <li>
-                            <button onClick={deleteColumn}>
+                            <button onClick={deleteColumn}
+                            onMouseEnter={() => setShowColors(false)}
+                                    >
                                 <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Column
                             </button>
                         </li>
                         <li>
-                            <button onClick={addRowBefore}>
+                            <button onClick={addRowBefore}
+                            onMouseEnter={() => setShowColors(false)}
+                            >
                                 <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: '0.5rem' }} /> Add Row Above
                             </button>
                         </li>
                         <li>
-                            <button onClick={addRowAfter}>
+                            <button onClick={addRowAfter}
+                            onMouseEnter={() => setShowColors(false)}
+                            >
                                 <FontAwesomeIcon icon={faArrowDown} style={{ marginRight: '0.5rem' }} /> Add Row Below
                             </button>
                         </li>
                         <li>
-                            <button onClick={addColumnBefore}>
+                            <button onClick={addColumnBefore}
+                            onMouseEnter={() => setShowColors(false)}
+                            >
                                 <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} /> Add Column Left
                             </button>
                         </li>
                         <li>
-                            <button onClick={addColumnAfter}>
+                            <button onClick={addColumnAfter}
+                            onMouseEnter={() => setShowColors(false)}
+                            >
                                 <FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '0.5rem' }} /> Add Column Right
                             </button>
                         </li>
