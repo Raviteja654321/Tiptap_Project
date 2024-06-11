@@ -29,7 +29,7 @@ const CustomTableCell = TableCell.extend({
                 style: `
                         position: relative;
                         height: 20px;
-                        border: 2px solid #ced4da;
+                        border: 2px solid #CFD5DA;
                         width: 150px;
                     `,
                 class: 'table-cell',
@@ -84,10 +84,7 @@ const CustomTableCell = TableCell.extend({
 
     addNodeView() {
         return ReactNodeViewRenderer(TableCellNodeView, {
-            as: 'td',
-            // attrs: props.node.attrs,
-            style: ` margin: 0px; padding: 0px; border: 0px `
-        });
+        as:'td', className: 'tableCell'});
     },
 
     parseHTML() {
@@ -108,11 +105,11 @@ const CustomTableHeader = TableHeader.extend({
         return {
             HTMLAttributes: {
                 style: `
-                    background-color: #2D323B;
-                    color: #ffffff;
+                    background-color: #F2F2F4;
+                    color: #000000;
                     font-weight: bold;
                     text-align: center;
-                    border: 1px solid #ced4da;
+                    border: 1px solid #CFD5DA;
                     position: relative;
                     height:20px;
                 `

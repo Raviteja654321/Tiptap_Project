@@ -11,21 +11,30 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
 
     const { from, to } = editor.state.selection;
 
+    // Assuming getPos is a function that returns the position of the node
     const nodeFrom = getPos();
     const nodeTo = nodeFrom + node.nodeSize;
-    if (nodeFrom >= from && to >= nodeTo) {
-        console.log("selected from custom");
-        // node.attrs.backgroundColor='skyblue';
-        console.log(node);
-        // updateAttributes({
-        //     backgroundColor: 'skyblue',
-        // })
+
+    // Check if the selection is within the node's range
+    // if (nodeFrom <= from && to <= nodeTo) 
+    // {
+    //     console.log("Selected from custom");
+    //     // cell.style.border = '1px solid blue',
+    //     // cell.style.backgroundColor = 'skyblue'
+
+    // //     // Update the background color of the node
+    //     updateAttributes({
+    //         backgroundColor: 'skyblue',
+    //         // border: `2px solid blue`,
+    //     });
+    // }
+    if(selected)
+    {
+        console.log("Selected a cell");
     }
-    // console.log(getdom);
 
     const clearCell = () => {
-        console.log("Inside Clearcell", node.content)
-        // (node.content=" ");
+        console.log("Inside Clearcell", node.content);
         editor.chain().focus().deleteSelection().run();
     };
 
@@ -69,7 +78,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                 position: 'relative',
                 height: 'auto',
             }}>
-            <NodeViewContent className="content" style={{ display: "flex", width: 'fit-content', margin: '0', padding: '0' }} />
+            <NodeViewContent className="content" style={{ width: '100%', margin: '0', padding: '0' }} />
             {isfocused && (
                 <button
                     className="label"
@@ -96,12 +105,11 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                             >
                                 <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} />Background Color
                             </button>
-                            {
-                                showColors &&
+                            {showColors &&
                                 <div className="dropdown-colors-container">
                                     <ul className='popover-colors'>
                                         <li>
-                                            <button onClick={(event) => { updateAttributes({ backgroundColor: 'white' }); cell.style.backgroundColor = 'white' }}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'white' }); cell.style.backgroundColor = 'white' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffffff', marginRight: '0.5rem' }} /> White
                                             </button>
                                         </li>
@@ -116,32 +124,32 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'pink' });  cell.style.backgroundColor = 'pink'}}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'pink' }); cell.style.backgroundColor = 'pink' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffc0cb', marginRight: '0.5rem' }} /> Pink
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'yellow' });  cell.style.backgroundColor = 'yellow' }}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'yellow' }); cell.style.backgroundColor = 'yellow' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffff00', marginRight: '0.5rem' }} /> Yellow
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'blue' });  cell.style.backgroundColor = 'blue' }}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'blue' }); cell.style.backgroundColor = 'blue' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#0000ff', marginRight: '0.5rem' }} /> Blue
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'black' });  cell.style.backgroundColor = 'black' }}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'black' }); cell.style.backgroundColor = 'black' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#000000', marginRight: '0.5rem' }} /> Black
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'orange' });  cell.style.backgroundColor = 'orange' }}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'orange' }); cell.style.backgroundColor = 'orange' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffa500', marginRight: '0.5rem' }} /> Orange
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'violet' });  cell.style.backgroundColor = 'violet' }}>
+                                            <button onClick={() => { updateAttributes({ backgroundColor: 'violet' }); cell.style.backgroundColor = 'violet' }}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ee82ee', marginRight: '0.5rem' }} /> Violet
                                             </button>
                                         </li>
@@ -151,7 +159,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                         </li>
                         <li>
                             <button
-                                onClick={clearCell(cell)}
+                                onClick={() => { console.log(cell) }}
                                 onMouseEnter={() => setShowColors(false)}
                             >
                                 <FontAwesomeIcon icon={faEraser} style={{ marginRight: '0.5rem' }} /> Clear Cell
