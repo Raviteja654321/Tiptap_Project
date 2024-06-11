@@ -3,34 +3,27 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFill, faEraser, faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
-const TableCellNodeView = ({ updateAttributes, editor, selected, getPos,  node }) => {
+const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, node }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [isfocused, setIsfocused] = useState(false);
     const [showColors, setShowColors] = useState(false);
     
-    // const { from, to } = editor.state.selection;
+    const { from, to } = editor.state.selection;
 
-    // const nodeFrom = getPos();
-    // const nodeTo = nodeFrom + node.nodeSize;
-    // if(nodeFrom >= from && to >= nodeTo){
-    //     console.log("selected from custom");
-    //     // node.attrs.backgroundColor='skyblue';
-    //     console.log(node);
-    //     // updateAttributes({
-    //     //     backgroundColor: 'skyblue',
-    //     // })
-    // }
-
-
-
-    const handleBackgroundColorChange = (color) => {
-        editor.chain().focus().setCellAttribute('backgroundColor', color).run();
-    };
+    const nodeFrom = getPos();
+    const nodeTo = nodeFrom + node.nodeSize;
+    if(nodeFrom >= from && to >= nodeTo){
+        console.log("selected from custom");
+        // node.attrs.backgroundColor='skyblue';
+        console.log(node);
+        // updateAttributes({
+        //     backgroundColor: 'skyblue',
+        // })
+    }
 
     const clearCell = () => {
         editor.chain().focus().deleteSelection().run();
     };
-
 
     const deleteRow = () => {
         editor.chain().focus().deleteRow().run();
@@ -59,7 +52,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos,  node }
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onClick={(e) => { e.preventDefault(); setIsfocused(true) }}
+            onClick={() => { setIsfocused(true) }}
             onMouseLeave={() => { setIsfocused(false); setShowDropdown(false) }}
             style={{
                 display: "flex",
@@ -99,47 +92,47 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos,  node }
                                 <div className="dropdown-colors-container">
                                     <ul className='popover-colors'>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#ffffff')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'white'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffffff', marginRight: '0.5rem' }} /> White
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#add8e6')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'lightblue'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#add8e6', marginRight: '0.5rem' }} /> Light Blue
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#e0e0e0')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'gray'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#e0e0e0', marginRight: '0.5rem' }} /> Gray
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#ffc0cb')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'pink'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffc0cb', marginRight: '0.5rem' }} /> Pink
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#ffff00')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'yellow'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffff00', marginRight: '0.5rem' }} /> Yellow
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#0000ff')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'blue'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#0000ff', marginRight: '0.5rem' }} /> Blue
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#000000')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'black'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#000000', marginRight: '0.5rem' }} /> Black
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#ffa500')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'orange'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ffa500', marginRight: '0.5rem' }} /> Orange
                                             </button>
                                         </li>
                                         <li>
-                                            <button onClick={() => handleBackgroundColorChange('#ee82ee')}>
+                                            <button onClick={() => {updateAttributes({backgroundColor: 'violet'})}}>
                                                 <FontAwesomeIcon icon={faCircle} style={{ color: '#ee82ee', marginRight: '0.5rem' }} /> Violet
                                             </button>
                                         </li>

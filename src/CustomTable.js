@@ -5,7 +5,6 @@ import TableCellNodeView from './TableCellNodeView';
 import { undo, redo, history } from '@tiptap/pm/history'
 import { mergeAttributes, ReactNodeViewRenderer } from '@tiptap/react';
 import { keymap } from '@tiptap/pm/keymap';
-import { Node } from '@tiptap/pm/model';
 
 
 const CustomTable = Table.extend({
