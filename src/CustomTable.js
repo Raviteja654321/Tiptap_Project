@@ -3,7 +3,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import Table from '@tiptap/extension-table';
 import TableCellNodeView from './TableCellNodeView';
 import {undo,redo, history } from '@tiptap/pm/history'
-import { ReactNodeViewRenderer } from '@tiptap/react';
+import { mergeAttributes, ReactNodeViewRenderer } from '@tiptap/react';
 import { keymap } from '@tiptap/pm/keymap';
 
 
@@ -80,10 +80,12 @@ const CustomTableCell = TableCell.extend({
     },
     
     addNodeView() {
-        return ReactNodeViewRenderer(TableCellNodeView,{as:'td', style: {
-            backgroundColor: 'green',
-            
-        }});
+        return ReactNodeViewRenderer(TableCellNodeView,{as:'td',});
+    },
+
+    renderHTML({ HTMLAttributes }) {
+        console.log("TableEditor", "renderHTML", HTMLAttributes);
+        return ["td", mergeAttributes(HTMLAttributes), 0];
     },
 });
 

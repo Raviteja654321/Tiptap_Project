@@ -44,7 +44,7 @@ const TableCellNodeView = ({ editor, selected, node }) => {
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onMouseEnter={() => setIsfocused(true)}
+            onClick={() => setIsfocused(true)}
             onMouseLeave={() => { setIsfocused(false); setShowDropdown(false) }}
             style={{
                 display: "flex",
