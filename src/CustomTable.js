@@ -105,8 +105,8 @@ const CustomTableHeader = TableHeader.extend({
         return {
             HTMLAttributes: {
                 style: `
-                    background-color: #F2F2F4;
-                    color: #000000;
+                    background-color: #2D323B;
+                    color: #ffffff;
                     font-weight: bold;
                     text-align: center;
                     border: 1px solid #CFD5DA;

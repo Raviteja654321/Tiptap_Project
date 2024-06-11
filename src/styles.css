@@ -3,17 +3,21 @@ table{
   min-width: 100px;
 
 }
-td {
+
+td,th {
   border: 2px solid #a9b2ba;
   margin: 0px;
   padding: 0px;
 }
+
 .column-resize-handle {
-  bottom: 1px;
+  background-color: rgb(120, 173, 225);
+  bottom: -2px;
   position: absolute;
-  right: -3px;
+  right: -2px;
+  pointer-events: none;
   top: 0;
-  width: 1px;
+  width: 3px;
 }
 
 .resize-cursor {
