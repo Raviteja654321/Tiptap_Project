@@ -78,6 +78,7 @@ const CustomTableCell = TableCell.extend({
             keymap({
                 "Mod-z": undo,
                 "Mod-y": redo,
+                "Mod-Shift-z": redo,
             })
         ];
     },

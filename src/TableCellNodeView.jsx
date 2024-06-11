@@ -8,13 +8,18 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos,  node }
     const [isfocused, setIsfocused] = useState(false);
     const [showColors, setShowColors] = useState(false);
     
-    const { from, to } = editor.state.selection;
+    // const { from, to } = editor.state.selection;
 
-    const nodeFrom = getPos();
-    const nodeTo = nodeFrom + node.nodeSize;
-    if(nodeFrom <= from && to <= nodeTo){
-        console.log("selected from custom");
-    }
+    // const nodeFrom = getPos();
+    // const nodeTo = nodeFrom + node.nodeSize;
+    // if(nodeFrom >= from && to >= nodeTo){
+    //     console.log("selected from custom");
+    //     // node.attrs.backgroundColor='skyblue';
+    //     console.log(node);
+    //     // updateAttributes({
+    //     //     backgroundColor: 'skyblue',
+    //     // })
+    // }
 
 
 
