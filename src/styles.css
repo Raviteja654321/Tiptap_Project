@@ -5,6 +5,8 @@ table{
 }
 td {
   border: 2px solid #a9b2ba;
+  margin: 0px;
+  padding: 0px;
 }
 .column-resize-handle {
   bottom: 1px;

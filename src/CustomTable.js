@@ -38,7 +38,7 @@ const CustomTableCell = TableCell.extend({
     },
 
     content: "block+",
-
+    selectable: true,
     addAttributes() {
         return {
             colwidth: {
@@ -83,7 +83,11 @@ const CustomTableCell = TableCell.extend({
     },
 
     addNodeView() {
-        return (props) => ReactNodeViewRenderer(TableCellNodeView, { as: 'td',attrs: props.node.attrs })(props);
+        return ReactNodeViewRenderer(TableCellNodeView, {
+            as: 'td',
+            // attrs: props.node.attrs,
+            style: ` margin: 0px; padding: 0px; border: 0px `
+        });
     },
 
     parseHTML() {
