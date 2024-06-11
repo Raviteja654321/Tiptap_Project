@@ -2,9 +2,10 @@ import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
 import Table from '@tiptap/extension-table';
 import TableCellNodeView from './TableCellNodeView';
-import {undo,redo, history } from '@tiptap/pm/history'
+import { undo, redo, history } from '@tiptap/pm/history'
 import { mergeAttributes, ReactNodeViewRenderer } from '@tiptap/react';
 import { keymap } from '@tiptap/pm/keymap';
+import { Node } from '@tiptap/pm/model';
 
 
 const CustomTable = Table.extend({
@@ -36,6 +37,8 @@ const CustomTableCell = TableCell.extend({
             }
         }
     },
+
+    content: "block+",
 
     addAttributes() {
         return {
@@ -71,21 +74,28 @@ const CustomTableCell = TableCell.extend({
 
     addProseMirrorPlugins() {
         return [
-          history(),
-          keymap({
-            "Mod-z": undo,
-            "Mod-y": redo,
-          })
+            history(),
+            keymap({
+                "Mod-z": undo,
+                "Mod-y": redo,
+            })
         ];
     },
-    
+
     addNodeView() {
-        return ReactNodeViewRenderer(TableCellNodeView,{as:'td',});
+        return (props) => ReactNodeViewRenderer(TableCellNodeView, { as: 'td',attrs: props.node.attrs })(props);
+    },
+
+    parseHTML() {
+        return [{ tag: "td" }];
     },
 
     renderHTML({ HTMLAttributes }) {
-        console.log("TableEditor", "renderHTML", HTMLAttributes);
-        return ["td", mergeAttributes(HTMLAttributes), 0];
+        return [
+            "td",
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+            0,
+        ];
     },
 });
 

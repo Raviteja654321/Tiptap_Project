@@ -1,14 +1,23 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFill, faEraser,faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
+import { faFill, faEraser, faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
-const TableCellNodeView = ({ editor, selected, node }) => {
+const TableCellNodeView = ({ updateAttributes, editor, selected, getPos,  node }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [isfocused, setIsfocused] = useState(false);
     const [showColors, setShowColors] = useState(false);
-
     
+    const { from, to } = editor.state.selection;
+
+    const nodeFrom = getPos();
+    const nodeTo = nodeFrom + node.nodeSize;
+    if(nodeFrom <= from && to <= nodeTo){
+        console.log("selected from custom");
+    }
+
+
+
     const handleBackgroundColorChange = (color) => {
         editor.chain().focus().setCellAttribute('backgroundColor', color).run();
     };
@@ -16,6 +25,7 @@ const TableCellNodeView = ({ editor, selected, node }) => {
     const clearCell = () => {
         editor.chain().focus().deleteSelection().run();
     };
+
 
     const deleteRow = () => {
         editor.chain().focus().deleteRow().run();
@@ -44,7 +54,7 @@ const TableCellNodeView = ({ editor, selected, node }) => {
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onClick={() => setIsfocused(true)}
+            onClick={(e) => { e.preventDefault(); setIsfocused(true) }}
             onMouseLeave={() => { setIsfocused(false); setShowDropdown(false) }}
             style={{
                 display: "flex",
@@ -77,7 +87,7 @@ const TableCellNodeView = ({ editor, selected, node }) => {
                             <button
                                 onMouseEnter={() => setShowColors(true)}
                             >
-                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} />Background Color 
+                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} />Background Color
                             </button>
                             {
                                 showColors &&
