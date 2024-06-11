@@ -65,7 +65,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onClick={(event) => {
+            onMouseEnter={(event) => {
                 setIsfocused(true);
                 if (event.target.tagName === 'DIV') {
                     setCell(event.target);
