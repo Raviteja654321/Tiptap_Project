@@ -28,7 +28,7 @@ const CustomTableCell = TableCell.extend({
             HTMLAttributes: {
                 style: `
                         position: relative;
-                        height: 20px;
+                        height: 50px;
                         border: 2px solid #CFD5DA;
                         width: 150px;
                     `,

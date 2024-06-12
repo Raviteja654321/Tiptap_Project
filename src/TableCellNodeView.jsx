@@ -1,5 +1,5 @@
 import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFill, faEraser, faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -11,23 +11,17 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
 
     const { from, to } = editor.state.selection;
 
-    // Assuming getPos is a function that returns the position of the node
     const nodeFrom = getPos();
     const nodeTo = nodeFrom + node.nodeSize;
+    useEffect(()=>{
+        
+        console.log("from = ",from, "to = ",to);
 
-    // Check if the selection is within the node's range
-    // if (nodeFrom <= from && to <= nodeTo) 
-    // {
-    //     console.log("Selected from custom");
-    //     // cell.style.border = '1px solid blue',
-    //     // cell.style.backgroundColor = 'skyblue'
 
-    // //     // Update the background color of the node
-    //     updateAttributes({
-    //         backgroundColor: 'skyblue',
-    //         // border: `2px solid blue`,
-    //     });
-    // }
+        console.log("nodefrom = ",nodeFrom, "nodeto = ",nodeTo);
+    },[from,to,nodeFrom,nodeTo])
+    
+
     if(selected)
     {
         console.log("Selected a cell");
