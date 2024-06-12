@@ -28,8 +28,17 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
     }
 
     const clearCell = () => {
-        console.log("Inside Clearcell", node.content);
-        editor.chain().focus().deleteSelection().run();
+        // editor.chain().focus().deleteSelection(nodeFrom+2,nodeTo-2).run(); 
+        editor.chain().focus().command(({tr})=>{
+            // const { $from, $to } = tr.selection
+            // const ccfrom = tr.mapping.map($from.pos)
+            // const ccto = tr.mapping.map($to.pos)
+            // console.log("clear cell -> from =",nodefrom, "to ", ccto);
+            tr.delete(nodeFrom+2, nodeTo-2)
+            return true
+        })
+        .run();
+
     };
 
     const deleteRow = () => {
@@ -153,7 +162,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                         </li>
                         <li>
                             <button
-                                onClick={() => { console.log(cell) }}
+                                onClick={clearCell}
                                 onMouseEnter={() => setShowColors(false)}
                             >
                                 <FontAwesomeIcon icon={faEraser} style={{ marginRight: '0.5rem' }} /> Clear Cell
