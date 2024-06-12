@@ -14,13 +14,11 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
     const nodeFrom = getPos();
     const nodeTo = nodeFrom + node.nodeSize;
     useEffect(()=>{
-        
         console.log("from = ",from, "to = ",to);
-
-
         console.log("nodefrom = ",nodeFrom, "nodeto = ",nodeTo);
+        console.log(from >=nodeFrom && to<=nodeTo);
+        setIsfocused(from>=nodeFrom && to <=nodeTo);
     },[from,to,nodeFrom,nodeTo])
-    
 
     if(selected)
     {
@@ -28,12 +26,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
     }
 
     const clearCell = () => {
-        // editor.chain().focus().deleteSelection(nodeFrom+2,nodeTo-2).run(); 
         editor.chain().focus().command(({tr})=>{
-            // const { $from, $to } = tr.selection
-            // const ccfrom = tr.mapping.map($from.pos)
-            // const ccto = tr.mapping.map($to.pos)
-            // console.log("clear cell -> from =",nodefrom, "to ", ccto);
             tr.delete(nodeFrom+2, nodeTo-2)
             return true
         })
@@ -68,8 +61,10 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onMouseEnter={(event) => {
+            onClick={()=>{
                 setIsfocused(true);
+            }}
+            onMouseEnter={(event) => {
                 if (event.target.tagName === 'DIV') {
                     setCell(event.target);
                 }
