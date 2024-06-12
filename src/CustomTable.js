@@ -109,7 +109,7 @@ const CustomTableHeader = TableHeader.extend({
                     color: #ffffff;
                     font-weight: bold;
                     text-align: center;
-                    border: 1px solid #CFD5DA;
+                    border: 2px solid #CFD5DA;
                     position: relative;
                     height:20px;
                 `
