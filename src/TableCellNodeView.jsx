@@ -1,37 +1,43 @@
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/react';
-import React, { useEffect, useState } from 'react';
+import { NodeViewWrapper, NodeViewContent, ReactRenderer } from '@tiptap/react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFill, faEraser, faCircle, faTrashAlt, faArrowUp, faArrowDown, faArrowLeft, faArrowRight, faCaretSquareDown, faCaretSquareRight } from '@fortawesome/free-solid-svg-icons';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+import {
+    faFill,
+    faEraser,
+    faCircle,
+    faTrashAlt,
+    faArrowUp,
+    faArrowDown,
+    faArrowLeft,
+    faArrowRight,
+    faCaretSquareDown,
+    faCaretSquareRight,
+} from '@fortawesome/free-solid-svg-icons';
 
-const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom, node }) => {
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [isfocused, setIsfocused] = useState(false);
-    const [cell, setCell] = useState(null);
-    const [showColors, setShowColors] = useState(false);
+const DropdownContent = ({editor}) => {
 
-    const { from, to } = editor.state.selection;
-
-    const nodeFrom = getPos();
-    const nodeTo = nodeFrom + node.nodeSize;
-    useEffect(()=>{
-        console.log("from = ",from, "to = ",to);
-        console.log("nodefrom = ",nodeFrom, "nodeto = ",nodeTo);
-        console.log(from >=nodeFrom && to<=nodeTo);
-        setIsfocused(from>=nodeFrom && to <=nodeTo);
-    },[from,to,nodeFrom,nodeTo])
-
-    if(selected)
-    {
-        console.log("Selected a cell");
-    }
+    const colorOptions = [
+        { name: 'White', color: '#ffffff' },
+        { name: 'Light Blue', color: '#add8e6' },
+        { name: 'Gray', color: '#e0e0e0' },
+        { name: 'Pink', color: '#ffc0cb' },
+        { name: 'Yellow', color: '#ffff00' },
+        { name: 'Blue', color: '#0000ff' },
+        { name: 'Black', color: '#000000' },
+        { name: 'Orange', color: '#ffa500' },
+        { name: 'Violet', color: '#ee82ee' },
+    ];
 
     const clearCell = () => {
-        editor.chain().focus().command(({tr})=>{
-            tr.delete(nodeFrom+2, nodeTo-2)
-            return true
-        })
-        .run();
+        // console.log("before -> from ",from," to ", to);
 
+        editor.chain().focus().command(({ tr }) => {
+            // tr.delete(nodeFrom + 2, nodeTo - 2);
+            return true;
+        }).run();
+        // console.log("after -> from ",from," to ", to);
     };
 
     const deleteRow = () => {
@@ -57,11 +63,89 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
     const addColumnAfter = () => {
         editor.chain().focus().addColumnAfter().run();
     };
+    
+   return  <ul className="popover-list">
+        <li>
+            <button onMouseOver={(e) => e.currentTarget.nextElementSibling.style.display = 'block'}>
+                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} />Background Color
+            </button>
+            <div className="dropdown-colors-container" style={{ display: 'none' }}>
+                <ul className="popover-colors">
+                    {colorOptions.map(({ name, color }) => (
+                        <li key={name}>
+                            {/* <button onClick={() => {
+                                updateAttributes({ backgroundColor: color });
+                                cell.style.backgroundColor = color;
+                                console.log(cell);
+                            }}>
+                                <FontAwesomeIcon icon={faCircle} style={{ color, marginRight: '0.5rem' }} /> {name}
+                            </button> */}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </li>
+        <li><button onClick={clearCell}><FontAwesomeIcon icon={faEraser} style={{ marginRight: '0.5rem' }} /> Clear Cell</button></li>
+        <li><button onClick={deleteRow}><FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Row</button></li>
+        <li><button onClick={deleteColumn}><FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Column</button></li>
+        <li><button onClick={addRowBefore}><FontAwesomeIcon icon={faArrowUp} style={{ marginRight: '0.5rem' }} /> Add Row Above</button></li>
+        <li><button onClick={addRowAfter}><FontAwesomeIcon icon={faArrowDown} style={{ marginRight: '0.5rem' }} /> Add Row Below</button></li>
+        <li><button onClick={addColumnBefore}><FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} /> Add Column Left</button></li>
+        <li><button onClick={addColumnAfter}><FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '0.5rem' }} /> Add Column Right</button></li>
+    </ul>
+}
+
+const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, node }) => {
+    
+    const [isfocused, setIsfocused] = useState(false);
+    const [cell,setCell]            = useState(null);
+    const dropdownButtonRef         = useRef(null);
+    const dropdownContentRef        = useRef(null);
+    const { from, to }              = editor.state.selection;
+    const nodeFrom                  = getPos();
+    const nodeTo                    = nodeFrom + node.nodeSize;
+
+    useEffect(() => {
+        setIsfocused(from >= nodeFrom && to <= nodeTo);
+    }, [from, to, nodeFrom, nodeTo]);
+
+    
+
+    
+
+    
+
+    useEffect(() => {
+        if (dropdownButtonRef.current && isfocused) {
+            const renderer = new ReactRenderer(DropdownContent, {props: {editor}, editor});
+
+            const tippyInstance = tippy(dropdownButtonRef.current, {
+                appendTo: () => document.body,
+                content: renderer.element,
+                allowHTML: true,
+                trigger: 'click',
+                interactive: true,
+                placement: 'bottom',
+                // onShow(instance) {
+                //     console.log("onshow");
+                //     console.log(dropdownContentRef);
+                //     console.log(dropdownContentRef.current);
+                //     console.log(dropdownContentRef.current.style);
+                //     console.log(dropdownContentRef.current.style.display);
+                    // dropdownContentRef.current.style.display = 'block';
+                // },
+            });
+
+            return () => {
+                tippyInstance.destroy();
+            };
+        }
+    }, [isfocused]);
 
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onClick={()=>{
+            onClick={(e) => {
                 setIsfocused(true);
             }}
             onMouseEnter={(event) => {
@@ -69,7 +153,6 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                     setCell(event.target);
                 }
             }}
-            onMouseLeave={() => { setIsfocused(false); setShowDropdown(false) }}
             style={{
                 display: "flex",
                 width: '100%',
@@ -80,7 +163,7 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
             {isfocused && (
                 <button
                     className="label"
-                    onClick={() => setShowDropdown(!showDropdown)}
+                    ref={dropdownButtonRef}
                     style={{
                         background: 'transparent',
                         border: 'none',
@@ -91,122 +174,8 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, getdom,
                         right: '0px'
                     }}
                 >
-                    <FontAwesomeIcon icon={!showDropdown ? faCaretSquareDown : faCaretSquareRight} />
+                    <FontAwesomeIcon icon={ isfocused? faCaretSquareDown: faCaretSquareRight} />
                 </button>
-            )}
-            {showDropdown && (
-                <div className="dropdown-container">
-                    <ul className="popover-list">
-                        <li>
-                            <button
-                                onMouseEnter={() => setShowColors(true)}
-                            >
-                                <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} />Background Color
-                            </button>
-                            {showColors &&
-                                <div className="dropdown-colors-container">
-                                    <ul className='popover-colors'>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'white' }); cell.style.backgroundColor = 'white' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#ffffff', marginRight: '0.5rem' }} /> White
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'lightblue' }); cell.style.backgroundColor = 'lightblue' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#add8e6', marginRight: '0.5rem' }} /> Light Blue
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'gray' }); cell.style.backgroundColor = 'gray' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#e0e0e0', marginRight: '0.5rem' }} /> Gray
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'pink' }); cell.style.backgroundColor = 'pink' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#ffc0cb', marginRight: '0.5rem' }} /> Pink
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'yellow' }); cell.style.backgroundColor = 'yellow' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#ffff00', marginRight: '0.5rem' }} /> Yellow
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'blue' }); cell.style.backgroundColor = 'blue' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#0000ff', marginRight: '0.5rem' }} /> Blue
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'black' }); cell.style.backgroundColor = 'black' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#000000', marginRight: '0.5rem' }} /> Black
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'orange' }); cell.style.backgroundColor = 'orange' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#ffa500', marginRight: '0.5rem' }} /> Orange
-                                            </button>
-                                        </li>
-                                        <li>
-                                            <button onClick={() => { updateAttributes({ backgroundColor: 'violet' }); cell.style.backgroundColor = 'violet' }}>
-                                                <FontAwesomeIcon icon={faCircle} style={{ color: '#ee82ee', marginRight: '0.5rem' }} /> Violet
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            }
-                        </li>
-                        <li>
-                            <button
-                                onClick={clearCell}
-                                onMouseEnter={() => setShowColors(false)}
-                            >
-                                <FontAwesomeIcon icon={faEraser} style={{ marginRight: '0.5rem' }} /> Clear Cell
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={deleteRow}
-                                onMouseEnter={() => setShowColors(false)}
-                            >
-                                <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Row
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={deleteColumn}
-                            onMouseEnter={() => setShowColors(false)}
-                                    >
-                                <FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Column
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={addRowBefore}
-                            onMouseEnter={() => setShowColors(false)}
-                            >
-                                <FontAwesomeIcon icon={faArrowUp} style={{ marginRight: '0.5rem' }} /> Add Row Above
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={addRowAfter}
-                            onMouseEnter={() => setShowColors(false)}
-                            >
-                                <FontAwesomeIcon icon={faArrowDown} style={{ marginRight: '0.5rem' }} /> Add Row Below
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={addColumnBefore}
-                            onMouseEnter={() => setShowColors(false)}
-                            >
-                                <FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} /> Add Column Left
-                            </button>
-                        </li>
-                        <li>
-                            <button onClick={addColumnAfter}
-                            onMouseEnter={() => setShowColors(false)}
-                            >
-                                <FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '0.5rem' }} /> Add Column Right
-                            </button>
-                        </li>
-                    </ul>
-                </div>
             )}
         </NodeViewWrapper>
     );
