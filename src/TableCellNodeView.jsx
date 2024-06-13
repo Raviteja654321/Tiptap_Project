@@ -16,7 +16,7 @@ import {
     faCaretSquareRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-const DropdownContent = ({editor}) => {
+const DropdownContent = ({editor,getPos,node}) => {
 
     const colorOptions = [
         { name: 'White', color: '#ffffff' },
@@ -32,9 +32,10 @@ const DropdownContent = ({editor}) => {
 
     const clearCell = () => {
         // console.log("before -> from ",from," to ", to);
-
+        let nodeFrom = getPos();
+        let nodeTo = nodeFrom + node.nodeSize;
         editor.chain().focus().command(({ tr }) => {
-            // tr.delete(nodeFrom + 2, nodeTo - 2);
+            tr.delete(nodeFrom + 2, nodeTo - 2);
             return true;
         }).run();
         // console.log("after -> from ",from," to ", to);
@@ -109,15 +110,9 @@ const TableCellNodeView = ({ updateAttributes, editor, selected, getPos, node })
         setIsfocused(from >= nodeFrom && to <= nodeTo);
     }, [from, to, nodeFrom, nodeTo]);
 
-    
-
-    
-
-    
-
     useEffect(() => {
         if (dropdownButtonRef.current && isfocused) {
-            const renderer = new ReactRenderer(DropdownContent, {props: {editor}, editor});
+            const renderer = new ReactRenderer(DropdownContent, {props: {editor,getPos,node}, editor, getPos, node});
 
             const tippyInstance = tippy(dropdownButtonRef.current, {
                 appendTo: () => document.body,
