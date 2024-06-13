@@ -9,7 +9,9 @@ import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 
-import {CustomTable, CustomTableHeader, CustomTableCell } from './CustomTable.js';
+import CustomTable from './extensions/CustomTable'
+import CustomTableHeader from './extensions/CustomTableHeader';
+import CustomTableCell from './extensions/CustomTableCell';
 
 const tableWrapperStyles = {
     padding: '1rem 0',
@@ -82,8 +84,8 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <div style={{ display: 'flex' }}> {/* Parent container for inline elements */}
-            <div style={{ width: '50%' }}> {/* First div with content */}
+            <div style={{ display: 'flex' }}> 
+            <div style={{ width: '50%' }}> 
                 <h3>Editor Content (HTML):</h3>
                 <pre>{htmlContent}</pre>
             </div>
