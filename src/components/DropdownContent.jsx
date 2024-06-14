@@ -1,5 +1,4 @@
-// src/components/DropdownContent.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faFill,
@@ -13,7 +12,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { colorOptions } from '../utils/colorOptions';
 
-const DropdownContent = ({ editor, getPos, node , cell }) => {
+
+
+const DropdownContent = ({ editor, getPos, node, cell, closeDropdown }) => {
 
     // Clear the content of the cell
     const clearCell = () => {
@@ -23,21 +24,25 @@ const DropdownContent = ({ editor, getPos, node , cell }) => {
             tr.delete(nodeFrom + 2, nodeTo - 2);
             return true;
         }).run();
+        closeDropdown();
     };
 
     // Delete the row
     const deleteRow = () => {
         editor.chain().focus().deleteRow().run();
+        closeDropdown();
     };
 
     // Delete the column
     const deleteColumn = () => {
         editor.chain().focus().deleteColumn().run();
+        closeDropdown();
     };
 
     // Add a row before the current row
     const addRowBefore = () => {
         editor.chain().focus().addRowBefore().run();
+        closeDropdown();
     };
 
     // Add a row after the current row
@@ -48,6 +53,7 @@ const DropdownContent = ({ editor, getPos, node , cell }) => {
     // Add a column before the current column
     const addColumnBefore = () => {
         editor.chain().focus().addColumnBefore().run();
+        closeDropdown();
     };
 
     // Add a column after the current column
@@ -57,37 +63,41 @@ const DropdownContent = ({ editor, getPos, node , cell }) => {
 
     // Set the background color of the cell
     const setBackgroundColor = (color) => {
-        editor.chain().focus().setCellAttribute('backgroundColor',color).run();
+        editor.chain().focus().setCellAttribute('backgroundColor', color).run();
         if (cell) {
             cell.style.backgroundColor = color;
         }
     };
 
+    const [colorsVisible, setColorsVisible] = useState(false);
+
     return (
         <ul className="popover-list">
-            <li>
-                <button onMouseOver={(e) => e.currentTarget.nextElementSibling.style.display = 'block'}>
-                    <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} />Background Color
+            <li onMouseOver={() => setColorsVisible(true)}>
+                <button>
+                    <FontAwesomeIcon icon={faFill} style={{ marginRight: '0.5rem' }} /> Background Color
                 </button>
-                <div className="dropdown-colors-container" style={{ display: 'none' }}>
-                    <ul className="popover-colors">
-                        {colorOptions.map(({ name, color }) => (
-                            <li key={name}>
-                                <button onClick={() => setBackgroundColor(color)}>
-                                    <FontAwesomeIcon icon={faCircle} style={{ color, marginRight: '0.5rem' }} /> {name}
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                {colorsVisible && (
+                    <div className="dropdown-colors-container">
+                        <ul className="popover-colors">
+                            {colorOptions.map(({ name, color }) => (
+                                <li key={name}>
+                                    <button onClick={() => setBackgroundColor(color)}>
+                                        <FontAwesomeIcon icon={faCircle} style={{ color, marginRight: '0.5rem' }} /> {name}
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
             </li>
-            <li><button onClick={clearCell}><FontAwesomeIcon icon={faEraser} style={{ marginRight: '0.5rem' }} /> Clear Cell</button></li>
-            <li><button onClick={deleteRow}><FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Row</button></li>
-            <li><button onClick={deleteColumn}><FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Column</button></li>
-            <li><button onClick={addRowBefore}><FontAwesomeIcon icon={faArrowUp} style={{ marginRight: '0.5rem' }} /> Add Row Above</button></li>
-            <li><button onClick={addRowAfter}><FontAwesomeIcon icon={faArrowDown} style={{ marginRight: '0.5rem' }} /> Add Row Below</button></li>
-            <li><button onClick={addColumnBefore}><FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} /> Add Column Left</button></li>
-            <li><button onClick={addColumnAfter}><FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '0.5rem' }} /> Add Column Right</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={clearCell}><FontAwesomeIcon icon={faEraser} style={{ marginRight: '0.5rem' }} /> Clear Cell</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={deleteRow}><FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Row</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={deleteColumn}><FontAwesomeIcon icon={faTrashAlt} style={{ marginRight: '0.5rem' }} /> Delete Column</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={addRowBefore}><FontAwesomeIcon icon={faArrowUp} style={{ marginRight: '0.5rem' }} /> Add Row Above</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={addRowAfter}><FontAwesomeIcon icon={faArrowDown} style={{ marginRight: '0.5rem' }} /> Add Row Below</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={addColumnBefore}><FontAwesomeIcon icon={faArrowLeft} style={{ marginRight: '0.5rem' }} /> Add Column Left</button></li>
+            <li><button onMouseOver={() => setColorsVisible(false)} onClick={addColumnAfter}><FontAwesomeIcon icon={faArrowRight} style={{ marginRight: '0.5rem' }} /> Add Column Right</button></li>
         </ul>
     );
 };

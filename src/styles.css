@@ -25,20 +25,11 @@ td,th {
   cursor: col-resize;
 }
 
- .dropdown-container {
-  position: absolute;
-  background-color: #282E33;
-  border-radius: 0.5rem;
-  padding: 0.1rem 0.5rem;
-  right: -148px;
-  z-index: 1;
-}
-
 .dropdown-colors-container {
   position: absolute;
-  background-color: #282E33;
+  background-color: #152531;
   border-radius: 0.5rem;
-  right: -80.6px;
+  right: -100px;
   top: 0px;
   padding: 0.1rem 0.5rem;
   z-index: 1;

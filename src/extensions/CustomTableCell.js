@@ -7,6 +7,7 @@ import { keymap } from '@tiptap/pm/keymap';
 const CustomTableCell = TableCell.extend({
     addOptions() {
         return {
+            ...this.parent?.(),
             HTMLAttributes: {
                 style: `
                     position: relative;

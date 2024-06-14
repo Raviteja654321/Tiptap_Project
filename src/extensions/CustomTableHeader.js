@@ -3,6 +3,7 @@ import TableHeader from '@tiptap/extension-table-header';
 const CustomTableHeader = TableHeader.extend({
     addOptions() {
         return {
+            ...this.parent?.(),
             HTMLAttributes: {
                 style: `
                     background-color: #2D323B;

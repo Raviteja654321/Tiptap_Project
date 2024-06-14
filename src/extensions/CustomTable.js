@@ -1,4 +1,3 @@
-// src/extensions/CustomTable.js
 import Table from '@tiptap/extension-table';
 
 const CustomTable = Table.extend({

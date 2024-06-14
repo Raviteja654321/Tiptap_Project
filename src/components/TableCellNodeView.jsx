@@ -1,11 +1,10 @@
+import {faCaretSquareDown}                                 from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon }                                 from '@fortawesome/react-fontawesome';
+import                                                          'tippy.js/dist/tippy.css';
+import DropdownContent                                     from './DropdownContent';
 import { NodeViewWrapper, NodeViewContent, ReactRenderer } from '@tiptap/react';
-import React, { useEffect, useState, useRef } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
-import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
-
-import DropdownContent from './DropdownContent';
+import tippy                                               from 'tippy.js';
+import React, { useEffect, useState, useRef }              from 'react';
 
 const TableCellNodeView = ({editor, getPos, node }) => {
     
@@ -20,9 +19,23 @@ const TableCellNodeView = ({editor, getPos, node }) => {
         setIsfocused(from >= nodeFrom && to <= nodeTo);
     }, [from, to, nodeFrom, nodeTo]);
 
+    // Tippy instance is created
     useEffect(() => {
         if (dropdownButtonRef.current && isfocused) {
-            const renderer = new ReactRenderer(DropdownContent, {props: {editor,getPos,node,cell}, editor});
+            const renderer = new ReactRenderer(DropdownContent, { 
+                props: { 
+                    editor, 
+                    getPos, 
+                    node, 
+                    cell,
+                    closeDropdown: () => {
+                        if (tippyInstance) {
+                            tippyInstance.hide();
+                        }
+                    }
+                }, 
+                editor 
+            });
 
             const tippyInstance = tippy(dropdownButtonRef.current, {
                 appendTo: () => document.body,
@@ -38,6 +51,7 @@ const TableCellNodeView = ({editor, getPos, node }) => {
             };
         }
     }, [isfocused,editor,getPos,node,cell]);
+
 
     return (
         <NodeViewWrapper

@@ -1,4 +1,3 @@
-
 export const colorOptions = [
     { name: 'White', color: '#ffffff' },
     { name: 'Light Blue', color: '#add8e6' },
