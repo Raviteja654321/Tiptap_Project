@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { colorOptions } from '../utils/colorOptions';
 
-const DropdownContent = ({ editor, getPos, node, updateAttributes }) => {
+const DropdownContent = ({ editor, getPos, node , cell }) => {
 
     // Clear the content of the cell
     const clearCell = () => {
@@ -58,7 +58,6 @@ const DropdownContent = ({ editor, getPos, node, updateAttributes }) => {
     // Set the background color of the cell
     const setBackgroundColor = (color) => {
         editor.chain().focus().setCellAttribute('backgroundColor',color).run();
-        const cell = document.querySelector(`[data-node-view-wrapper]`);
         if (cell) {
             cell.style.backgroundColor = color;
         }

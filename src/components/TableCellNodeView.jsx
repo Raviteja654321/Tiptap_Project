@@ -3,10 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
-import {
-    faCaretSquareDown,
-    faCaretSquareRight,
-} from '@fortawesome/free-solid-svg-icons';
+import {faCaretSquareDown} from '@fortawesome/free-solid-svg-icons';
 
 import DropdownContent from './DropdownContent';
 
@@ -25,7 +22,7 @@ const TableCellNodeView = ({editor, getPos, node }) => {
 
     useEffect(() => {
         if (dropdownButtonRef.current && isfocused) {
-            const renderer = new ReactRenderer(DropdownContent, {props: {editor,getPos,node}, editor});
+            const renderer = new ReactRenderer(DropdownContent, {props: {editor,getPos,node,cell}, editor});
 
             const tippyInstance = tippy(dropdownButtonRef.current, {
                 appendTo: () => document.body,
@@ -40,12 +37,12 @@ const TableCellNodeView = ({editor, getPos, node }) => {
                 tippyInstance.destroy();
             };
         }
-    }, [isfocused]);
+    }, [isfocused,editor,getPos,node,cell]);
 
     return (
         <NodeViewWrapper
             className="react-component-with-content"
-            onClick={(e) => {
+            onClick={() => {
                 setIsfocused(true);
             }}
             onMouseEnter={(event) => {
@@ -53,6 +50,7 @@ const TableCellNodeView = ({editor, getPos, node }) => {
                     setCell(event.target);
                 }
             }}
+            // onMouseLeave={() => { setIsfocused(false)}}
             style={{
                 display: "flex",
                 width: '100%',
@@ -74,7 +72,7 @@ const TableCellNodeView = ({editor, getPos, node }) => {
                         right: '0px'
                     }}
                 >
-                    <FontAwesomeIcon icon={ isfocused? faCaretSquareDown: faCaretSquareRight} />
+                    <FontAwesomeIcon icon={faCaretSquareDown} />
                 </button>
             )}
         </NodeViewWrapper>
