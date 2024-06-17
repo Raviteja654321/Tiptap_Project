@@ -118,12 +118,12 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
         }
     }, [parentTable, isFocused, editor]);
 
-    // Function to add a column to the right
+    // Function to add a column to the left
     const handleAddColumn = () => {
         editor.chain().focus().addColumnBefore().run();
     };
 
-    // Function to add a row below
+    // Function to add a row before
     const handleAddRow = () => {
         editor.chain().focus().addRowBefore().run();
     };
@@ -167,42 +167,43 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     >
                         <FontAwesomeIcon icon={faCaretSquareDown} />
                     </button>
-                    <button
+                    {isFocused && (
+                        <button
+                            className="add-row"
+                            onClick={handleAddRow}
+                            ref={columnButtonRef}
+                            style={{
+                                background: 'transparent',
+                                border: 'none',
+                                cursor: 'pointer',
+                                color: '#000000',
+                                width: 'fit-content',
+                                position: 'absolute',
+                                top: '-10px',
+                                right: '50%',
+                                transform: 'translateX(50%)',
+                            }}
+                        >
+                            <FontAwesomeIcon icon={faPlusSquare} />
+                        </button>)}
+                    {isFocused && (<button
                         className="add-column"
-                        onClick={handleAddRow}
-                        ref={columnButtonRef}
-                        style={{
-                            background: 'transparent',
-                            border: 'none',
-                            cursor: 'pointer',
-                            color: '#B7C3CF',
-                            width: 'fit-content',
-                            position: 'absolute',
-                            top: '-10px',
-                            right: '50%',
-                            transform: 'translateX(50%)',
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faPlusSquare} />
-                    </button>
-                    <button
-                        className="add-row"
                         onClick={handleAddColumn}
                         ref={rowButtonRef}
                         style={{
                             background: 'transparent',
                             border: 'none',
                             cursor: 'pointer',
-                            color: '#B7C3CF',
+                            color: '#000000',
                             width: 'fit-content',
                             position: 'absolute',
-                            left: '-10px',
+                            left: '-14px',
                             top: '50%',
                             transform: 'translateY(-50%)',
                         }}
                     >
                         <FontAwesomeIcon icon={faPlusSquare} />
-                    </button>
+                    </button>)}
                 </>
             )}
             <div ref={tableDropdownRef} style={{ position: 'absolute', bottom: '-10px', width: '100%' }} />
