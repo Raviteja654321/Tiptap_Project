@@ -71,8 +71,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 allowHTML: true,
                 trigger: 'click',
                 interactive: true,
-                placement: 'right',
-                style : 'marginleft: 0'
+                placement: 'bottom',
             });
 
             return () => {

@@ -16,6 +16,14 @@ import { colorOptions } from '../utils/colorOptions';
 
 const DropdownContent = ({ editor, getPos, node, cell, closeDropdown }) => {
 
+    // Set the background color of the cell
+    const setBackgroundColor = (color) => {
+        editor.chain().focus().setCellAttribute('backgroundColor', color).run();
+        if (cell) {
+            cell.style.backgroundColor = color;
+        }
+    };
+
     // Clear the content of the cell
     const clearCell = () => {
         let nodeFrom = getPos();
@@ -59,14 +67,6 @@ const DropdownContent = ({ editor, getPos, node, cell, closeDropdown }) => {
     // Add a column after the current column
     const addColumnAfter = () => {
         editor.chain().focus().addColumnAfter().run();
-    };
-
-    // Set the background color of the cell
-    const setBackgroundColor = (color) => {
-        editor.chain().focus().setCellAttribute('backgroundColor', color).run();
-        if (cell) {
-            cell.style.backgroundColor = color;
-        }
     };
 
     const [colorsVisible, setColorsVisible] = useState(false);

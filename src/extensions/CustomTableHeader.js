@@ -12,7 +12,8 @@ const CustomTableHeader = TableHeader.extend({
                     text-align: center;
                     border: 2px solid #CFD5DA;
                     position: relative;
-                    height: 20px;
+                    height: 50px;
+                    width: 150px;
                 `
             }
         };
