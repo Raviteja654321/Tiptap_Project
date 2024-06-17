@@ -5,7 +5,7 @@ import DropdownContent from './DropdownContent';
 import TableDropdownContent from './TableDropdownContent';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretSquareDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretSquareDown, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 
 // Helper function to find the parent node
 const findParentClosestToPos = ($pos, predicate) => {
@@ -26,6 +26,8 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
     const [cell, setCell] = useState(null);
     const dropdownButtonRef = useRef(null);
     const tableDropdownRef = useRef(null);
+    const columnButtonRef = useRef(null);
+    const rowButtonRef = useRef(null);
     const [parentTable, setParentTable] = useState(null);
 
     const { from, to } = editor.state.selection;
@@ -116,6 +118,16 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
         }
     }, [parentTable, isFocused, editor]);
 
+    // Function to add a column to the right
+    const handleAddColumn = () => {
+        editor.chain().focus().addColumnBefore().run();
+    };
+
+    // Function to add a row below
+    const handleAddRow = () => {
+        editor.chain().focus().addRowBefore().run();
+    };
+
     return (
         <NodeViewWrapper
             className="react-component-with-content"
@@ -139,21 +151,59 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
             }}>
             <NodeViewContent className="content" style={{ width: '100%', margin: '0', padding: '0' }} />
             {isFocused && (
-                <button
-                    className="label"
-                    ref={dropdownButtonRef}
-                    style={{
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                        color: '#B7C3CF',
-                        width: 'fit-content',
-                        position: 'absolute',
-                        right: '0px'
-                    }}
-                >
-                    <FontAwesomeIcon icon={faCaretSquareDown} />
-                </button>
+                <>
+                    <button
+                        className="label"
+                        ref={dropdownButtonRef}
+                        style={{
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: '#B7C3CF',
+                            width: 'fit-content',
+                            position: 'absolute',
+                            right: '0px'
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faCaretSquareDown} />
+                    </button>
+                    <button
+                        className="add-column"
+                        onClick={handleAddRow}
+                        ref={columnButtonRef}
+                        style={{
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: '#B7C3CF',
+                            width: 'fit-content',
+                            position: 'absolute',
+                            top: '-10px',
+                            right: '50%',
+                            transform: 'translateX(50%)',
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faPlusSquare} />
+                    </button>
+                    <button
+                        className="add-row"
+                        onClick={handleAddColumn}
+                        ref={rowButtonRef}
+                        style={{
+                            background: 'transparent',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: '#B7C3CF',
+                            width: 'fit-content',
+                            position: 'absolute',
+                            left: '-10px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faPlusSquare} />
+                    </button>
+                </>
             )}
             <div ref={tableDropdownRef} style={{ position: 'absolute', bottom: '-10px', width: '100%' }} />
         </NodeViewWrapper>
