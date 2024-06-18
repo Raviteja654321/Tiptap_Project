@@ -4,6 +4,8 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import Paragraph from '@tiptap/extension-paragraph';
+import BulletList from '@tiptap/extension-bullet-list'
+import ListItem from '@tiptap/extension-list-item'
 import Text from '@tiptap/extension-text';
 import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
@@ -35,6 +37,8 @@ const Tiptap = () => {
             CustomTableHeader,
             TableCell,
             CustomTableCell,
+            BulletList,
+            ListItem
         ],
         content: `
             <table>
@@ -81,6 +85,10 @@ const Tiptap = () => {
         <div>
             <button onClick={() => editor.chain().focus().insertTable({ rows: 4, cols: 3, withHeaderRow: true }).run()}>
                 Insert Table
+            </button>
+            <button 
+                onClick={() => editor.chain().focus().toggleBulletList().run()} >
+                Toggle bullet list
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
