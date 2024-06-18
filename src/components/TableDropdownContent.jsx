@@ -1,4 +1,12 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faTrashAlt,
+    faCopy,
+    faColumns,
+    faArrowUp,
+    faArrowLeft
+} from '@fortawesome/free-solid-svg-icons';
 
 const TableDropdownContent = ({ editor, parentTable, closeDropdown }) => {
     
@@ -50,13 +58,25 @@ const TableDropdownContent = ({ editor, parentTable, closeDropdown }) => {
         }
     };
 
+    const iconStyle = { color: '#ffffff', fontSize: '1rem' }; // Custom icon color and size
+
     return (
-        <div style={{ padding: '10px' }}>
-            <button onClick={handleDeleteTable} style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Delete Table</button>
-            <button onClick={handleCopyTable} style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Copy Table</button>
-            <button style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Adjust Columns</button>
-            <button onClick={handleToggleHeaderColumn} style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Toggle Header Column</button>
-            <button onClick={handleToggleHeaderRow} style={{ display: 'block', cursor: 'pointer' }}>Toggle Header Row</button>
+        <div style={{ padding: '4px', display: 'flex', justifyContent: 'space-around' }}>
+            <button onClick={handleDeleteTable} title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <FontAwesomeIcon icon={faTrashAlt} style={iconStyle} />
+            </button>
+            <button onClick={handleCopyTable} title="Copy Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <FontAwesomeIcon icon={faCopy} style={iconStyle} />
+            </button>
+            <button title="Adjust Columns" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <FontAwesomeIcon icon={faColumns} style={iconStyle} />
+            </button>
+            <button onClick={handleToggleHeaderColumn} title="Toggle Header Column" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <FontAwesomeIcon icon={faArrowLeft} style={iconStyle} />
+            </button>
+            <button onClick={handleToggleHeaderRow} title="Toggle Header Row" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <FontAwesomeIcon icon={faArrowUp} style={iconStyle} />
+            </button>
         </div>
     );
 };
