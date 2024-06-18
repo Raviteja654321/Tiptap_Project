@@ -154,10 +154,12 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 <>
                     <button
                         className="label"
+                        title='cell options'
                         ref={dropdownButtonRef}
                         style={{
-                            background: 'transparent',
+                            background: 'white',
                             border: 'none',
+                            padding: '0px',
                             cursor: 'pointer',
                             color: '#B7C3CF',
                             width: 'fit-content',
@@ -170,6 +172,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     {isFocused && (
                         <button
                             className="add-row"
+                            title='add row above'
                             onClick={handleAddRow}
                             ref={columnButtonRef}
                             style={{
@@ -188,6 +191,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                         </button>)}
                     {isFocused && (<button
                         className="add-column"
+                        title='add column left'
                         onClick={handleAddColumn}
                         ref={rowButtonRef}
                         style={{
@@ -197,7 +201,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                             color: '#000000',
                             width: 'fit-content',
                             position: 'absolute',
-                            left: '-14px',
+                            left: '-16px',
                             top: '50%',
                             transform: 'translateY(-50%)',
                         }}
