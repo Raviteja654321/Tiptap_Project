@@ -31,11 +31,27 @@ const TableDropdownContent = ({ editor, parentTable, closeDropdown }) => {
     // Function to toggle the header column
     const handleToggleHeaderColumn = () => {
         editor.chain().focus().toggleHeaderColumn().run();
+        makeHeaderColumnNonEditable();
         closeDropdown();
     };
 
+    // Function to make the header column non-editable
+    const makeHeaderColumnNonEditable = () => {
+        const table = editor.view.dom.querySelector('table');
+        if (table) {
+            const rows = table.rows;
+            // editor.chain().focus().setCellAttribute('contenteditable', 'false').run();
+            for (let row of rows) {
+                const cell = row.cells[0];
+                if (cell) {
+                    cell.contentEditable = cell.classList.contains('header-column') ? 'false' : 'true';
+                }
+            }
+        }
+    };
+
     return (
-        <div style={{ padding: '10px'}}>
+        <div style={{ padding: '10px' }}>
             <button onClick={handleDeleteTable} style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Delete Table</button>
             <button onClick={handleCopyTable} style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Copy Table</button>
             <button style={{ display: 'block', marginBottom: '2px', cursor: 'pointer' }}>Adjust Columns</button>
