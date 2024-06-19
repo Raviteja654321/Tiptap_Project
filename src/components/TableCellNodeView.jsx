@@ -2,10 +2,10 @@ import React, { useEffect, useState, useRef } from 'react';
 import tippy from 'tippy.js';
 import { NodeViewWrapper, NodeViewContent, ReactRenderer } from '@tiptap/react';
 import DropdownContent from './DropdownContent';
-import TableDropdownContent from './TableDropdownContent';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import TableCellBubbleMenu from './TableOptionsBubbleMenu';
 
 // Helper function to find the parent node
 const findParentClosestToPos = ($pos, predicate) => {
@@ -25,10 +25,8 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
     const [isFocused, setIsFocused] = useState(false);
     const [cell, setCell] = useState(null);
     const dropdownButtonRef = useRef(null);
-    const tableDropdownRef = useRef(null);
-    const columnButtonRef = useRef(null);
-    const rowButtonRef = useRef(null);
     const [parentTable, setParentTable] = useState(null);
+    const [tableRect, setTableRect] = useState(null);
 
     const { from, to } = editor.state.selection;
     const nodeFrom = getPos();
@@ -43,7 +41,11 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
             const tableNode = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
             if (tableNode) {
                 setParentTable(tableNode);
-                console.log("Table is => ", tableNode.node);
+                const dom = editor.view.domAtPos(tableNode.pos).node;
+                if (dom) {
+                    const rect = dom.getBoundingClientRect();
+                    setTableRect(rect);
+                }
             }
         }
     }, [editor, from, to, nodeFrom, nodeTo]);
@@ -81,52 +83,6 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
             };
         }
     }, [isFocused, editor, getPos, node, cell, parentTable]);
-
-    // Tippy instance for table dropdown
-    useEffect(() => {
-        if (tableDropdownRef.current && parentTable) {
-            const renderer = new ReactRenderer(TableDropdownContent, {
-                props: {
-                    editor,
-                    parentTable,
-                    closeDropdown: () => {
-                        if (tippyInstance) {
-                            tippyInstance.hide();
-                        }
-                    }
-                },
-                editor
-            });
-
-            const tippyInstance = tippy(tableDropdownRef.current, {
-                appendTo: () => document.body,
-                content: renderer.element,
-                allowHTML: true,
-                trigger: 'manual',
-                interactive: true,
-                placement: 'bottom',
-            });
-
-            // Show the table dropdown when a cell is focused
-            if (isFocused) {
-                tippyInstance.show();
-            }
-
-            return () => {
-                tippyInstance.destroy();
-            };
-        }
-    }, [parentTable, isFocused, editor]);
-
-    // Function to add a column to the left
-    const handleAddColumn = () => {
-        editor.chain().focus().addColumnBefore().run();
-    };
-
-    // Function to add a row before
-    const handleAddRow = () => {
-        editor.chain().focus().addRowBefore().run();
-    };
 
     return (
         <NodeViewWrapper
@@ -170,10 +126,10 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                         }}
                     >
                         <FontAwesomeIcon icon={faChevronDown} />
-                   </button>
+                    </button>
                 </>
             )}
-            <div ref={tableDropdownRef} style={{ position: 'absolute', bottom: '-10px', width: '100%' }} />
+            <TableCellBubbleMenu editor={editor} parentTable={parentTable} tableRect={tableRect} isVisible={isFocused} />
         </NodeViewWrapper>
     );
 };

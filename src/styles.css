@@ -1,6 +1,7 @@
 table{
   border-collapse: collapse;
   min-width: 100px;
+  padding: 50px;
 
 }
 
@@ -8,6 +9,7 @@ td,th {
   border: 2px solid #a9b2ba;
   margin: 2px;
   padding: 0px;
+  width: 150px;
 }
 
 .column-resize-handle {
@@ -82,3 +84,4 @@ td,th {
   position: absolute;
   z-index: 2;
 }
+
