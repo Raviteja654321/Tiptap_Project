@@ -5,7 +5,7 @@ import DropdownContent from './DropdownContent';
 import 'tippy.js/dist/tippy.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import TableCellBubbleMenu from './TableOptionsBubbleMenu';
+import TableOptionsBubbleMenu from './TableOptionsBubbleMenu';
 
 // Helper function to find the parent node
 const findParentClosestToPos = ($pos, predicate) => {
@@ -129,7 +129,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     </button>
                 </>
             )}
-            <TableCellBubbleMenu editor={editor} parentTable={parentTable} tableRect={tableRect} isVisible={isFocused} />
+            <TableOptionsBubbleMenu editor={editor} parentTable={parentTable} tableRect={tableRect} isVisible={isFocused} />
         </NodeViewWrapper>
     );
 };
