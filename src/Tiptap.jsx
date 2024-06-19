@@ -18,6 +18,7 @@ import CustomTableCell from './extensions/CustomTableCell';
 const tableWrapperStyles = {
     padding: '1rem 0',
     border: '2px solid #ced4da',
+    padding: '50px',
     overflowX: 'auto',
     height: '50vh'
 };
