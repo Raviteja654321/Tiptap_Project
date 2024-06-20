@@ -39,23 +39,7 @@ const TableDropdownContent = ({ editor, parentTable, closeDropdown }) => {
     // Function to toggle the header column
     const handleToggleHeaderColumn = () => {
         editor.chain().focus().toggleHeaderColumn().run();
-        makeHeaderColumnNonEditable();
         closeDropdown();
-    };
-
-    // Function to make the header column non-editable
-    const makeHeaderColumnNonEditable = () => {
-        const table = editor.view.dom.querySelector('table');
-        if (table) {
-            const rows = table.rows;
-            // editor.chain().focus().setCellAttribute('contenteditable', 'false').run();
-            for (let row of rows) {
-                const cell = row.cells[0];
-                if (cell) {
-                    cell.contentEditable = cell.classList.contains('header-column') ? 'false' : 'true';
-                }
-            }
-        }
     };
 
     const iconStyle = { color: '#ffffff', fontSize: '1rem' }; // Custom icon color and size

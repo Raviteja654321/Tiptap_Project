@@ -26,7 +26,6 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
     const [cell, setCell] = useState(null);
     const dropdownButtonRef = useRef(null);
     const [parentTable, setParentTable] = useState(null);
-    const [tableRect, setTableRect] = useState(null);
 
     const { from, to } = editor.state.selection;
     const nodeFrom = getPos();
@@ -41,17 +40,13 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
             const tableNode = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
             if (tableNode) {
                 setParentTable(tableNode);
-                const dom = editor.view.domAtPos(tableNode.pos).node;
-                if (dom) {
-                    const rect = dom.getBoundingClientRect();
-                    setTableRect(rect);
-                }
             }
         }
     }, [editor, from, to, nodeFrom, nodeTo]);
 
     // Tippy instance for cell dropdown
     useEffect(() => {
+        let tippyInstance;
         if (dropdownButtonRef.current && isFocused) {
             const renderer = new ReactRenderer(DropdownContent, {
                 props: {
@@ -69,7 +64,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 editor
             });
 
-            const tippyInstance = tippy(dropdownButtonRef.current, {
+            tippyInstance = tippy(dropdownButtonRef.current, {
                 appendTo: () => document.body,
                 content: renderer.element,
                 allowHTML: true,
@@ -79,7 +74,12 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
             });
 
             return () => {
-                tippyInstance.destroy();
+                if (renderer) {
+                    renderer.destroy();
+                }
+                if (tippyInstance) {
+                    tippyInstance.destroy();
+                }
             };
         }
     }, [isFocused, editor, getPos, node, cell, parentTable]);
@@ -110,7 +110,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 <>
                     <button
                         className="label"
-                        aria-label='cell options'
+                        title='cell options'
                         ref={dropdownButtonRef}
                         style={{
                             background: 'white',
@@ -129,7 +129,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     </button>
                 </>
             )}
-            <TableOptionsBubbleMenu editor={editor} parentTable={parentTable} tableRect={tableRect} isVisible={isFocused} />
+            <TableOptionsBubbleMenu editor={editor} parentTable={parentTable} isVisible={isFocused} />
         </NodeViewWrapper>
     );
 };
