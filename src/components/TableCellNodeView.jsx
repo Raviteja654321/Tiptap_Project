@@ -113,13 +113,13 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                         title='cell options'
                         ref={dropdownButtonRef}
                         style={{
-                            background: 'white',
+                            background: '#F3F7EC',
                             border: 'none',
                             borderRadius: '3px',
                             padding: '0px',
+                            margin: '0px',
                             cursor: 'pointer',
-                            color: '#B7C3CF',
-                            width: 'fit-content',
+                            color: '#000000',
                             position: 'absolute',
                             right: '5px',
                             top: '5px',
