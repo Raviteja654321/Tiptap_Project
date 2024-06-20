@@ -129,7 +129,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     </button>
                 </>
             )}
-            <TableOptionsBubbleMenu editor={editor} parentTable={parentTable} isVisible={isFocused} />
+            <TableOptionsBubbleMenu editor={editor} parentTable={parentTable} isVisible={isFocused} getPos={getPos}/> {/* Added getPos here */}
         </NodeViewWrapper>
     );
 };
