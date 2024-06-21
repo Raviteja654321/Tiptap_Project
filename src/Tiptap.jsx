@@ -8,12 +8,12 @@ import Text from '@tiptap/extension-text';
 import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
-import { BubbleMenu } from '@tiptap/react';
+import { BubbleMenu } from './extensions/BubbleMenu';
 
 import CustomTable from './extensions/CustomTable'
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
-import BubbleMenuExtension from './extensions/bubble-menu'
+import BubbleMenuExtension from './extensions/bubble-menu';
 
 const tableWrapperStyles = {
     border: '2px solid #ced4da',
@@ -86,7 +86,7 @@ const Tiptap = () => {
                 Insert Table
             </button>
             <h2>Insert Table Below</h2>
-            {editor && <BubbleMenu shouldShow={ () => editor.isActive('table')} editor={editor} >
+            {editor && <BubbleMenu editor={editor} >
                 <div className="bubble-menu">
                     <button
                         // onClick={() => editor.chain().focus().toggleBold().run()}
