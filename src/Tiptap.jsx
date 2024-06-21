@@ -1,6 +1,6 @@
 import './styles.css'
 import React, { useState } from 'react';
-import { useEditor, EditorContent } from '@tiptap/react';
+import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import Paragraph from '@tiptap/extension-paragraph';
@@ -14,9 +14,9 @@ import TableHeader from '@tiptap/extension-table-header';
 import CustomTable from './extensions/CustomTable'
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
+// import {CustomBubbleMenu} from './extensions/CustomBubbleMenu';
 
 const tableWrapperStyles = {
-    padding: '1rem 0',
     border: '2px solid #ced4da',
     padding: '50px',
     overflowX: 'auto',
@@ -39,7 +39,8 @@ const Tiptap = () => {
             TableCell,
             CustomTableCell,
             BulletList,
-            ListItem
+            // CustomBubbleMenu,
+            ListItem,
         ],
         content: `
             <table>
@@ -69,7 +70,7 @@ const Tiptap = () => {
 
             <p>Hello</p>
       `,
-        onCreate:({editor})=>{
+        onCreate: ({ editor }) => {
             setHtmlContent(editor.getHTML());
         },
         onUpdate: ({ editor }) => {
@@ -87,18 +88,20 @@ const Tiptap = () => {
             <button onClick={() => editor.chain().focus().insertTable({ rows: 4, cols: 3, withHeaderRow: true }).run()}>
                 Insert Table
             </button>
-            <button 
+            <button
                 onClick={() => editor.chain().focus().toggleBulletList().run()} >
                 Toggle bullet list
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <div style={{ display: 'flex' }}> 
-            <div style={{ width: '50%' }}> 
-                <h3>Editor Content (HTML):</h3>
-                <pre>{htmlContent}</pre>
-            </div>
-            <div style={{ width: '50%', right: '0px' }} dangerouslySetInnerHTML={{ __html: htmlContent }} /> </div>
+            <BubbleMenu>
+            </BubbleMenu>
+            <div style={{ display: 'flex' }}>
+                <div style={{ width: '50%' }}>
+                    <h3>Editor Content (HTML):</h3>
+                    <pre>{htmlContent}</pre>
+                </div>
+                <div style={{ width: '50%', right: '0px' }} dangerouslySetInnerHTML={{ __html: htmlContent }} /> </div>
         </div>
     );
 };
