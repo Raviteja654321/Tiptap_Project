@@ -9,44 +9,17 @@ import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import { BubbleMenu } from '@tiptap/react';
-import BubbleMenuExtension from '@tiptap/extension-bubble-menu'
 
 import CustomTable from './extensions/CustomTable'
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
-// import BubbleMenuExtension from './extensions/bubble-menu'
+import BubbleMenuExtension from './extensions/bubble-menu'
 
 const tableWrapperStyles = {
     border: '2px solid #ced4da',
     padding: '50px',
     overflowX: 'auto',
     height: '50vh'
-};
-
-let tablerect ;
-
-const findParentClosestToPos = ($pos, predicate) => {
-    const depth = $pos.depth;
-
-    for (let i = depth; i > 0; i -= 1) {
-        const node = $pos.node(i);
-        if (predicate(node)) {
-            return { pos: $pos.before(i), node };
-        }
-    }
-
-    return undefined;
-};
-
-const Tablerectfinder = ({ editor, view, state, oldState, from, to }) => {
-    const resolvedPos = editor.state.doc.resolve(from);
-    const tableNode = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
-    if (tableNode) {
-        const rect = tableNode.node.getBoundingClientRect();
-        console.log(rect);
-        tablerect = rect;
-    }
-    return null;
 };
 
 const Tiptap = () => {
@@ -64,19 +37,7 @@ const Tiptap = () => {
             CustomTableHeader,
             TableCell,
             CustomTableCell,
-            BubbleMenuExtension.extend({
-                addOptions() {
-                    console.log(11111111, this.editor);
-                    return {
-                        ...this.parent?.(),
-                        shouldShow: ({ editor, view, state, oldState, from, to }) => {
-                            Tablerectfinder({editor, view, state, oldState, from, to})
-                            return editor.isActive('table')
-                        },
-                        tippyOptions: {getReferenceClientRect:  tablerect},
-                    }
-                },
-            }),
+            BubbleMenuExtension,
         ],
         content: `
             <table>
@@ -125,7 +86,7 @@ const Tiptap = () => {
                 Insert Table
             </button>
             <h2>Insert Table Below</h2>
-            {editor && <BubbleMenu shouldShow={()=>editor.isActive('table')}  editor={editor} tippyOptions={{getReferenceClientRect: tablerect }} >
+            {editor && <BubbleMenu shouldShow={ () => editor.isActive('table')} editor={editor} >
                 <div className="bubble-menu">
                     <button
                         // onClick={() => editor.chain().focus().toggleBold().run()}

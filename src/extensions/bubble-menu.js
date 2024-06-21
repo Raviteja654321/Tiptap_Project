@@ -6,7 +6,7 @@ import { BubbleMenuPlugin } from "./bubble-menu-plugin"
  * This extension allows you to create a bubble menu.
  * @see https://tiptap.dev/api/extensions/bubble-menu
  */
-export const BubbleMenuExtension = Extension.create({
+const BubbleMenuExtension = Extension.create({
   name: "bubbleMenu",
 
   addOptions() {
@@ -36,3 +36,5 @@ export const BubbleMenuExtension = Extension.create({
     ]
   }
 })
+
+export default BubbleMenuExtension;
