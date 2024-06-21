@@ -1,14 +1,12 @@
-import { Extension } from "@tiptap/core";
-import { BubbleMenuPlugin, BubbleMenuPluginProps } from "./bubble-menu-plugin";
+import { Extension } from "@tiptap/core"
 
-export type BubbleMenuOptions = Omit<
-  BubbleMenuPluginProps,
-  "editor" | "element"
-> & {
-  element: HTMLElement | null;
-};
+import { BubbleMenuPlugin } from "./bubble-menu-plugin"
 
-export const CustomBubbleMenu = Extension.create<BubbleMenuOptions>({
+/**
+ * This extension allows you to create a bubble menu.
+ * @see https://tiptap.dev/api/extensions/bubble-menu
+ */
+export const BubbleMenuExtension = Extension.create({
   name: "bubbleMenu",
 
   addOptions() {
@@ -17,13 +15,13 @@ export const CustomBubbleMenu = Extension.create<BubbleMenuOptions>({
       tippyOptions: {},
       pluginKey: "bubbleMenu",
       updateDelay: undefined,
-      shouldShow: null,
-    };
+      shouldShow: null
+    }
   },
 
   addProseMirrorPlugins() {
     if (!this.options.element) {
-      return [];
+      return []
     }
 
     return [
@@ -33,10 +31,8 @@ export const CustomBubbleMenu = Extension.create<BubbleMenuOptions>({
         element: this.options.element,
         tippyOptions: this.options.tippyOptions,
         updateDelay: this.options.updateDelay,
-        shouldShow: this.options.shouldShow,
-      }),
-    ];
-  },
-});
-
-export default CustomBubbleMenu;
+        shouldShow: this.options.shouldShow
+      })
+    ]
+  }
+})
