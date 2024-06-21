@@ -1,6 +1,6 @@
 import './styles.css'
 import React, { useState } from 'react';
-import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import Paragraph from '@tiptap/extension-paragraph';
@@ -14,6 +14,8 @@ import TableHeader from '@tiptap/extension-table-header';
 import CustomTable from './extensions/CustomTable'
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
+import { tableDecorationsPlugin, tableHoverPlugin } from './extensions/tablePlugins';
+
 // import {CustomBubbleMenu} from './extensions/CustomBubbleMenu';
 
 const tableWrapperStyles = {
@@ -41,6 +43,8 @@ const Tiptap = () => {
             BulletList,
             // CustomBubbleMenu,
             ListItem,
+            tableDecorationsPlugin,
+            tableHoverPlugin,
         ],
         content: `
             <table>
@@ -94,8 +98,6 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             <EditorContent style={tableWrapperStyles} editor={editor} />
-            <BubbleMenu>
-            </BubbleMenu>
             <div style={{ display: 'flex' }}>
                 <div style={{ width: '50%' }}>
                     <h3>Editor Content (HTML):</h3>
