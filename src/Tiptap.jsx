@@ -1,5 +1,14 @@
 import './styles.css'
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faTrashAlt,
+    faCopy,
+    faColumns,
+    faArrowUp,
+    faArrowLeft
+} from '@fortawesome/free-solid-svg-icons';
+
 import { useEditor, EditorContent } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
@@ -21,6 +30,8 @@ const tableWrapperStyles = {
     overflowX: 'auto',
     height: '50vh'
 };
+
+const iconStyle = { color: '#ffffff', fontSize: '1rem' };
 
 const Tiptap = () => {
     const [htmlContent, setHtmlContent] = useState();
@@ -88,23 +99,17 @@ const Tiptap = () => {
             <h2>Insert Table Below</h2>
             {editor && <BubbleMenu editor={editor} >
                 <div className="bubble-menu">
-                    <button
-                        // onClick={() => editor.chain().focus().toggleBold().run()}
-                        className={editor.isActive('bold') ? 'is-active' : ''}
-                    >
-                        Bold
+                    <button title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                        <FontAwesomeIcon icon={faTrashAlt} style={iconStyle} />
                     </button>
-                    <button
-                        // onClick={() => editor.chain().focus().toggleItalic().run()}
-                        className={editor.isActive('italic') ? 'is-active' : ''}
-                    >
-                        Italic
+                    <button title="Copy Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                        <FontAwesomeIcon icon={faCopy} style={iconStyle} />
                     </button>
-                    <button
-                        // onClick={() => editor.chain().focus().toggleStrike().run()}
-                        className={editor.isActive('strike') ? 'is-active' : ''}
-                    >
-                        Strike
+                    <button title="Toggle Header Column" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                        <FontAwesomeIcon icon={faArrowLeft} style={iconStyle} />
+                    </button>
+                    <button title="Toggle Header Row" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                        <FontAwesomeIcon icon={faArrowUp} style={iconStyle} />
                     </button>
                 </div>
             </BubbleMenu>}
