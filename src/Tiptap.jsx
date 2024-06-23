@@ -1,10 +1,9 @@
-import './styles.css'
+import './styles.css';
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTrashAlt,
     faCopy,
-    faColumns,
     faArrowUp,
     faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +18,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import { BubbleMenu } from './extensions/BubbleMenu';
 
-import CustomTable from './extensions/CustomTable'
+import CustomTable from './extensions/CustomTable';
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
 import BubbleMenuExtension from './extensions/bubble-menu';
@@ -29,6 +28,48 @@ const tableWrapperStyles = {
     padding: '50px',
     overflowX: 'auto',
     height: '50vh'
+};
+
+const findParentClosestToPos = ($pos, predicate) => {
+    const depth = $pos.depth;
+
+    for (let i = depth; i > 0; i -= 1) {
+        const node = $pos.node(i);
+        if (predicate(node)) {
+            return { pos: $pos.before(i), node };
+        }
+    }
+
+    return undefined;
+};
+
+const handleDeleteTable = ({ editor, parentTable }) => {
+    console.log("Deleting table");
+    if (parentTable) {
+        const { tr } = editor.state;
+        tr.delete(tr.mapping.map(parentTable.pos), tr.mapping.map(parentTable.pos + parentTable.node.nodeSize));
+        editor.view.dispatch(tr);
+    }
+};
+
+// Function to copy the table
+const handleCopyTable = (editor, parentTable) => {
+    console.log("copying table");
+    if (parentTable) {
+        const { tr } = editor.state;
+        const tableFragment = tr.doc.slice(parentTable.pos, parentTable.pos + parentTable.node.nodeSize);
+        navigator.clipboard.writeText(tableFragment);
+    }
+};
+
+// Function to toggle the header row
+const handleToggleHeaderRow = (editor) => {
+    editor.chain().focus().toggleHeaderRow().run();
+};
+
+// Function to toggle the header column
+const handleToggleHeaderColumn = (editor) => {
+    editor.chain().focus().toggleHeaderColumn().run();
 };
 
 const iconStyle = { color: '#ffffff', fontSize: '1rem' };
@@ -77,7 +118,7 @@ const Tiptap = () => {
             </table>
 
             <p>Hello</p>
-      `,
+        `,
         onCreate: ({ editor }) => {
             setHtmlContent(editor.getHTML());
         },
@@ -91,6 +132,9 @@ const Tiptap = () => {
         return null;
     }
 
+    const resolvedPos = editor.state.doc.resolve(editor.state.selection.from);
+    const parentTable = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
+
     return (
         <div>
             <button onClick={() => editor.chain().focus().insertTable({ rows: 4, cols: 3, withHeaderRow: true }).run()}>
@@ -98,20 +142,18 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             {editor && <BubbleMenu editor={editor} >
-                <div className="bubble-menu">
-                    <button title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                        <FontAwesomeIcon icon={faTrashAlt} style={iconStyle} />
-                    </button>
-                    <button title="Copy Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                        <FontAwesomeIcon icon={faCopy} style={iconStyle} />
-                    </button>
-                    <button title="Toggle Header Column" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                        <FontAwesomeIcon icon={faArrowLeft} style={iconStyle} />
-                    </button>
-                    <button title="Toggle Header Row" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                        <FontAwesomeIcon icon={faArrowUp} style={iconStyle} />
-                    </button>
-                </div>
+                <button onClick={() => handleDeleteTable(editor,parentTable)} title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                    <FontAwesomeIcon icon={faTrashAlt} style={iconStyle} />
+                </button>
+                <button onClick={() => handleCopyTable(editor, parentTable)} title="Copy Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                    <FontAwesomeIcon icon={faCopy} style={iconStyle} />
+                </button>
+                <button onClick={() => handleToggleHeaderColumn(editor)} title="Toggle Header Column" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                    <FontAwesomeIcon icon={faArrowLeft} style={iconStyle} />
+                </button>
+                <button onClick={() => handleToggleHeaderRow(editor)} title="Toggle Header Row" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                    <FontAwesomeIcon icon={faArrowUp} style={iconStyle} />
+                </button>
             </BubbleMenu>}
             <EditorContent style={tableWrapperStyles} editor={editor} />
             <div style={{ display: 'flex' }}>
