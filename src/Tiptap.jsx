@@ -78,6 +78,7 @@ const Tiptap = () => {
     const [htmlContent, setHtmlContent] = useState();
 
     const editor = useEditor({
+        style: ` padding:50px`,
         extensions: [
             Document,
             Paragraph,
@@ -142,7 +143,7 @@ const Tiptap = () => {
             </button>
             <h2>Insert Table Below</h2>
             {editor && <BubbleMenu editor={editor} >
-                <button onClick={() => handleDeleteTable(editor,parentTable)} title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <button onClick={() => handleDeleteTable(editor, parentTable)} title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
                     <FontAwesomeIcon icon={faTrashAlt} style={iconStyle} />
                 </button>
                 <button onClick={() => handleCopyTable(editor, parentTable)} title="Copy Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>

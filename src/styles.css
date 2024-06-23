@@ -101,3 +101,28 @@ td,th {
 .table-action-button:hover {
   background-color: #0056b3;
 }
+
+
+.add-column-button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  height: 24px;
+  line-height: 24px;
+  margin-left: -12px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  z-index: 10;
+}
+
+.add-column-button:hover {
+  background-color: #f0f0f0;
+}
+
+.tiptap.ProseMirror {
+  padding: 50px;
+}
