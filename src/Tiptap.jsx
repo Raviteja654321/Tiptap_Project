@@ -22,6 +22,7 @@ import CustomTable from './extensions/CustomTable';
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
 import TableMenuExtension from './extensions/TableOptions/table-menu';
+import { DOMSerializer } from '@tiptap/pm/model';
 
 const tableWrapperStyles = {
     border: '2px solid #ced4da',
@@ -39,7 +40,6 @@ const findParentClosestToPos = ($pos, predicate) => {
             return { pos: $pos.before(i), node };
         }
     }
-
     return undefined;
 };
 
@@ -51,12 +51,20 @@ const handleDeleteTable = (editor, parentTable) => {
     }
 };
 
-// Function to copy the table
 const handleCopyTable = (editor, parentTable) => {
-    if (parentTable.node) {
-        const { tr } = editor.state;
-        const tableFragment = tr.doc.slice(parentTable.pos, parentTable.pos + parentTable.node.nodeSize);
-        navigator.clipboard.writeText(tableFragment);
+    if (parentTable) {
+        const { tr, schema } = editor.state;
+        const tableNode = parentTable.node;
+        const domSerializer = DOMSerializer.fromSchema(schema);
+        
+        //Document fragment from the table node
+        const tableFragment = domSerializer.serializeFragment(tableNode.content);
+        const tempDiv = document.createElement('div');
+        
+        tempDiv.appendChild(tableFragment);
+        const htmlString = tempDiv.innerHTML;
+
+        navigator.clipboard.writeText(htmlString)
     }
 };
 
@@ -131,7 +139,6 @@ const Tiptap = () => {
 
     const resolvedPos = editor.state.doc.resolve(editor.state.selection.from);
     const parentTable = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
-    console.log("Parent table", parentTable);
 
     return (
         <div>
