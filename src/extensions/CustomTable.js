@@ -26,12 +26,12 @@ const CustomTable = Table.extend({
                     decorations: ({ doc, selection }) => {
                         const decorations = [];
                 
-                        const addColumnLeft = (pos) => {
-                            this.editor.chain().focus(pos).addColumnBefore().run();
+                        const addColumnLeft = () => {
+                            this.editor.chain().addColumnBefore().run();
                         };
                 
-                        const addRowAbove = (pos) => {
-                            this.editor.chain().focus(pos).addRowBefore().run();
+                        const addRowAbove = () => {
+                            this.editor.chain().addRowAfter().run();
                         };
                 
                         doc.descendants((node, pos) => {
@@ -42,20 +42,21 @@ const CustomTable = Table.extend({
                                         // Add column button
                                         if (cellIndex === 0) {
                                             const columnButtonDecoration = Decoration.widget(
-                                                pos + rowIndex + 1,
+                                                cell.nodeSize + rowIndex ,
                                                 () => {
+                                                    console.log("pos ",pos,"rowindex",rowIndex,"adding column at ", pos+ rowIndex +1 )
                                                     const button = document.createElement("button");
-                                                    button.className = 'add-column-button';
+                                                    button.className = 'add-row-button';
                                                     button.innerHTML = '<i class="fas fa-plus"></i>';
                                                     button.addEventListener("click", event => {
-                                                        // event.preventDefault();
-                                                        // event.stopPropagation();
-                                                        addColumnLeft(pos + rowIndex);
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        addRowAbove(pos + rowIndex);
                                                     });
                 
                                                     tippy(button, {
-                                                        content: 'Add column',
-                                                        placement: 'left',
+                                                        content: 'Add row',
+                                                        placement: 'bottom',
                                                     });
                 
                                                     return button;
@@ -68,20 +69,21 @@ const CustomTable = Table.extend({
                                         // Add row button
                                         if (rowIndex === 0) {
                                             const rowButtonDecoration = Decoration.widget(
-                                                pos + cellIndex + 1,
+                                                cell.nodeSize + cellIndex ,
                                                 () => {
+                                                    console.log("pos ",pos,"cellindex",cellIndex,"adding column at ", pos+ cellIndex +1 )
                                                     const button = document.createElement("button");
-                                                    button.className = 'add-row-button';
+                                                    button.className = 'add-column--button';
                                                     button.innerHTML = '<i class="fas fa-plus"></i>';
                                                     button.addEventListener("click", event => {
-                                                        // event.preventDefault();
-                                                        // event.stopPropagation();
-                                                        addRowAbove(pos + cellIndex);
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        addColumnLeft(pos + cellIndex);
                                                     });
                 
                                                     tippy(button, {
-                                                        content: 'Add row',
-                                                        placement: 'top',
+                                                        content: 'Add column',
+                                                        placement: 'left',
                                                     });
                 
                                                     return button;
