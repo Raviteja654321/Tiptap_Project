@@ -2,7 +2,7 @@ import { posToDOMRect } from "@tiptap/core"
 import { Plugin, PluginKey } from "@tiptap/pm/state"
 import tippy from "tippy.js"
 
-export class BubbleMenuView {
+export class TableMenuView {
     preventHide = false
 
     findParentClosestToPos = ($pos, predicate) => {
@@ -215,12 +215,12 @@ export class BubbleMenuView {
     }
 }
 
-export const BubbleMenuPlugin = options => {
+export const TableMenuPlugin = options => {
     return new Plugin({
         key:
             typeof options.pluginKey === "string"
                 ? new PluginKey(options.pluginKey)
                 : options.pluginKey,
-        view: view => new BubbleMenuView({ view, ...options })
+        view: view => new TableMenuView({ view, ...options })
     })
 }

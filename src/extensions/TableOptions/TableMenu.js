@@ -1,9 +1,9 @@
-import { BubbleMenuPlugin } from "./bubble-menu-plugin"
+import { TableMenuPlugin } from "./table-menu-plugin"
 import React, { useEffect, useState } from "react"
 
 import { useCurrentEditor } from "@tiptap/react"
 
-export const BubbleMenu = props => {
+export const TableMenu = props => {
   const [element, setElement] = useState(null)
   const { editor: currentEditor } = useCurrentEditor()
 
@@ -17,7 +17,7 @@ export const BubbleMenu = props => {
     }
 
     const {
-      pluginKey = "bubbleMenu",
+      pluginKey = "TableMenu",
       editor,
       tippyOptions = {},
       updateDelay,
@@ -28,12 +28,12 @@ export const BubbleMenu = props => {
 
     if (!menuEditor) {
       console.warn(
-        "BubbleMenu component is not rendered inside of an editor component or does not have editor prop."
+        "TableMenu component is not rendered inside of an editor component or does not have editor prop."
       )
       return
     }
 
-    const plugin = BubbleMenuPlugin({
+    const plugin = TableMenuPlugin({
       updateDelay,
       editor: menuEditor,
       element,

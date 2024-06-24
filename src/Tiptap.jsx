@@ -16,12 +16,12 @@ import Text from '@tiptap/extension-text';
 import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
-import { BubbleMenu } from './extensions/BubbleMenu';
+import { TableMenu } from './extensions/TableOptions/TableMenu';
 
 import CustomTable from './extensions/CustomTable';
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
-import BubbleMenuExtension from './extensions/bubble-menu';
+import TableMenuExtension from './extensions/TableOptions/table-menu';
 
 const tableWrapperStyles = {
     border: '2px solid #ced4da',
@@ -62,12 +62,10 @@ const handleCopyTable = (editor, parentTable) => {
     }
 };
 
-// Function to toggle the header row
 const handleToggleHeaderRow = (editor) => {
     editor.chain().focus().toggleHeaderRow().run();
 };
 
-// Function to toggle the header column
 const handleToggleHeaderColumn = (editor) => {
     editor.chain().focus().toggleHeaderColumn().run();
 };
@@ -90,7 +88,7 @@ const Tiptap = () => {
             CustomTableHeader,
             TableCell,
             CustomTableCell,
-            BubbleMenuExtension,
+            TableMenuExtension,
         ],
         content: `
             <table>
@@ -142,7 +140,7 @@ const Tiptap = () => {
                 Insert Table
             </button>
             <h2>Insert Table Below</h2>
-            {editor && <BubbleMenu editor={editor} >
+            {editor && <TableMenu editor={editor} >
                 <button onClick={() => handleDeleteTable(editor, parentTable)} title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
                     <FontAwesomeIcon icon={faTrashAlt} style={iconStyle} />
                 </button>
@@ -155,7 +153,7 @@ const Tiptap = () => {
                 <button onClick={() => handleToggleHeaderRow(editor)} title="Toggle Header Row" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
                     <FontAwesomeIcon icon={faArrowUp} style={iconStyle} />
                 </button>
-            </BubbleMenu>}
+            </TableMenu>}
             <EditorContent style={tableWrapperStyles} editor={editor} />
             <div style={{ display: 'flex' }}>
                 <div style={{ width: '50%' }}>

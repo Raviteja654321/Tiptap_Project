@@ -1,19 +1,15 @@
 import { Extension } from "@tiptap/core"
 
-import { BubbleMenuPlugin } from "./bubble-menu-plugin"
+import {TableMenuPlugin } from "./table-menu-plugin"
 
-/**
- * This extension allows you to create a bubble menu.
- * @see https://tiptap.dev/api/extensions/bubble-menu
- */
-const BubbleMenuExtension = Extension.create({
-  name: "bubbleMenu",
+const TableMenuExtension = Extension.create({
+  name: "tableMenu",
 
   addOptions() {
     return {
       element: null,
       tippyOptions: {},
-      pluginKey: "bubbleMenu",
+      pluginKey: "tableMenu",
       updateDelay: undefined,
       shouldShow: null
     }
@@ -25,7 +21,7 @@ const BubbleMenuExtension = Extension.create({
     }
 
     return [
-      BubbleMenuPlugin({
+      TableMenuPlugin({
         pluginKey: this.options.pluginKey,
         editor: this.editor,
         element: this.options.element,
@@ -37,4 +33,4 @@ const BubbleMenuExtension = Extension.create({
   }
 })
 
-export default BubbleMenuExtension;
+export default TableMenuExtension;
