@@ -1,11 +1,11 @@
-table{
+table {
   border-collapse: collapse;
   min-width: 100px;
   padding: 50px;
-
 }
 
-td,th {
+td,
+th {
   border: 2px solid #a9b2ba;
   margin: 2px;
   padding: 0px;
@@ -37,22 +37,23 @@ td,th {
   z-index: 1;
 }
 
- .popover-list, .popover-colors {
+.popover-list,
+.popover-colors {
   list-style: none;
   padding: 0;
-  margin: 0; 
+  margin: 0;
 }
 
- .popover-list li {
+.popover-list li {
   border-bottom: 1px solid grey;
   text-align: center;
 }
 
- .popover-list li button {
+.popover-list li button {
   width: fit-content;
   background: transparent;
   border: none;
-  color: #B7C3CF;
+  color: #b7c3cf;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -60,16 +61,16 @@ td,th {
   padding: 0.5rem 0;
 }
 
- .popover-list li button:hover {
+.popover-list li button:hover {
   color: #ffffff;
 }
 
- .popover-list li:last-child {
+.popover-list li:last-child {
   border-bottom: none;
 }
 
-.tableCell{
-  width: '100%';
+.tableCell {
+  width: "100%";
   position: relative;
 }
 
@@ -101,7 +102,6 @@ td,th {
 .table-action-button:hover {
   background-color: #0056b3;
 }
-
 
 .add-column-button {
   background-color: #fff;
