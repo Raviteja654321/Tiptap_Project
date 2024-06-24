@@ -44,7 +44,7 @@ const CustomTable = Table.extend({
                                             const columnButtonDecoration = Decoration.widget(
                                                 cell.nodeSize + rowIndex ,
                                                 () => {
-                                                    console.log("pos ",pos,"rowindex",rowIndex,"adding column at ", pos+ rowIndex +1 )
+                                                    // console.log("pos ",pos,"rowindex",rowIndex,"adding column at ", pos+ rowIndex +1 )
                                                     const button = document.createElement("button");
                                                     button.className = 'add-row-button';
                                                     button.innerHTML = '<i class="fas fa-plus"></i>';
@@ -71,7 +71,7 @@ const CustomTable = Table.extend({
                                             const rowButtonDecoration = Decoration.widget(
                                                 cell.nodeSize + cellIndex ,
                                                 () => {
-                                                    console.log("pos ",pos,"cellindex",cellIndex,"adding column at ", pos+ cellIndex +1 )
+                                                    // console.log("pos ",pos,"cellindex",cellIndex,"adding column at ", pos+ cellIndex +1 )
                                                     const button = document.createElement("button");
                                                     button.className = 'add-column--button';
                                                     button.innerHTML = '<i class="fas fa-plus"></i>';

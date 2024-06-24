@@ -46,8 +46,6 @@ export class TableMenuView {
         this.editor.on("focus", this.focusHandler)
         this.editor.on("blur", this.blurHandler)
         this.tippyOptions = tippyOptions
-        // Detaches menu content from its current parent
-        this.element.remove()
         this.element.style.visibility = "visible"
     }
 
