@@ -26,8 +26,8 @@ const CustomTable = Table.extend({
                     decorations: ({ doc, selection }) => {
                         const decorations = [];
                 
-                        const addColumnLeft = () => {
-                            this.editor.chain().addColumnBefore().run();
+                        const addColumnRight = () => {
+                            this.editor.chain().addColumnAfter().run();
                         };
                 
                         const addRowAbove = () => {
@@ -39,10 +39,10 @@ const CustomTable = Table.extend({
                                 // Iterate through table rows and columns
                                 node.content.forEach((row, rowIndex) => {
                                     row.content.forEach((cell, cellIndex) => {
-                                        // Add column button
+                                        // Add row button
                                         if (cellIndex === 0) {
                                             const columnButtonDecoration = Decoration.widget(
-                                                cell.nodeSize + rowIndex ,
+                                                cell.nodeSize + rowIndex +1,
                                                 () => {
                                                     // console.log("pos ",pos,"rowindex",rowIndex,"adding column at ", pos+ rowIndex +1 )
                                                     const button = document.createElement("button");
@@ -56,7 +56,7 @@ const CustomTable = Table.extend({
                 
                                                     tippy(button, {
                                                         content: 'Add row',
-                                                        placement: 'bottom',
+                                                        placement: 'left',
                                                     });
                 
                                                     return button;
@@ -66,24 +66,24 @@ const CustomTable = Table.extend({
                                             decorations.push(columnButtonDecoration);
                                         }
                 
-                                        // Add row button
+                                        // Add column button
                                         if (rowIndex === 0) {
                                             const rowButtonDecoration = Decoration.widget(
                                                 cell.nodeSize + cellIndex ,
                                                 () => {
                                                     // console.log("pos ",pos,"cellindex",cellIndex,"adding column at ", pos+ cellIndex +1 )
                                                     const button = document.createElement("button");
-                                                    button.className = 'add-column--button';
-                                                    button.innerHTML = '<i class="fas fa-plus"></i>';
+                                                    button.className = 'add-column-button';
+                                                    button.innerHTML = '<i class="fas fa-plus" style= "left: 0px"></i>';
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
-                                                        addColumnLeft(pos + cellIndex);
+                                                        addColumnRight(pos + cellIndex);
                                                     });
                 
                                                     tippy(button, {
                                                         content: 'Add column',
-                                                        placement: 'left',
+                                                        placement: 'top',
                                                     });
                 
                                                     return button;

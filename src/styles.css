@@ -86,43 +86,43 @@ th {
   z-index: 2;
 }
 
-.table-action-button {
-  position: absolute;
-  top: -30px; /* Adjust as needed */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 3px;
-  cursor: pointer;
-}
-
-.table-action-button:hover {
-  background-color: #0056b3;
-}
-
 .add-column-button {
-  background-color: #fff;
+  background-color: #a4a4a4;
   border: 1px solid #ccc;
-  border-radius: 50%;
+  border-radius: 30%;
   cursor: pointer;
-  font-size: 16px;
-  height: 24px;
-  line-height: 24px;
-  margin-left: -12px;
+  font-size: 10px;
+  height: 15px;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
+  right: -8px;
+  top: -20px;
+  width: 10px;
   z-index: 10;
 }
 
 .add-column-button:hover {
-  background-color: #f0f0f0;
+  background-color: #a4a4a4;
 }
 
 .tiptap.ProseMirror {
   padding: 50px;
 }
+
+.add-row-button {
+  background-color: #a4a4a4;
+  border: 1px solid #ccc;
+  border-radius: 30%;
+  cursor: pointer;
+  font-size: 10px;
+  height: 15px;
+  left: -16px;
+  bottom: -8px;
+  position: absolute;
+  width: 10px;
+  z-index: 10;
+}
+
+.add-row-button:hover {
+  background-color: #a4a4a4;
+}
+

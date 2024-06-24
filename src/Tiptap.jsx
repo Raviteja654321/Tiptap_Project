@@ -1,13 +1,12 @@
 import './styles.css';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTrashAlt,
     faCopy,
+    faArrowLeft,
     faArrowUp,
-    faArrowLeft
 } from '@fortawesome/free-solid-svg-icons';
-
 import { useEditor, EditorContent } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
@@ -23,6 +22,8 @@ import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
 import TableMenuExtension from './extensions/TableOptions/table-menu';
 import { DOMSerializer } from '@tiptap/pm/model';
+import Tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css'; // optional for styling
 
 const tableWrapperStyles = {
     border: '2px solid #ced4da',
@@ -80,6 +81,7 @@ const iconStyle = { color: '#ffffff', fontSize: '1rem' };
 
 const Tiptap = () => {
     const [htmlContent, setHtmlContent] = useState();
+    const ellipsisRef = useRef(null);
 
     const editor = useEditor({
         style: ` padding:50px`,
@@ -132,6 +134,22 @@ const Tiptap = () => {
             setHtmlContent(html);
         }
     });
+
+    useEffect(() => {
+        if (ellipsisRef.current) {
+            const dropdownContent = document.createElement('div');
+            dropdownContent.innerHTML = `
+                <div style="display: flex; flex-direction: column;">
+                    <button id="toggle-header-row">Toggle Header Row</button>
+                    <button id="toggle-header-column">Toggle Header Column</button>
+                </div>
+            `;
+            ellipsisRef.current._tippy.setContent(dropdownContent);
+
+            // document.getElementById('toggle-header-row').addEventListener('click', () => handleToggleHeaderRow(editor));
+            // document.getElementById('toggle-header-column').addEventListener('click', () => handleToggleHeaderColumn(editor));
+        }
+    }, [editor]);
 
     if (!editor) {
         return null;
