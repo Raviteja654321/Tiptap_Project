@@ -43,8 +43,7 @@ const findParentClosestToPos = ($pos, predicate) => {
     return undefined;
 };
 
-const handleDeleteTable = ({ editor, parentTable }) => {
-    console.log("Deleting table");
+const handleDeleteTable = (editor, parentTable) => {
     if (parentTable) {
         const { tr } = editor.state;
         tr.delete(tr.mapping.map(parentTable.pos), tr.mapping.map(parentTable.pos + parentTable.node.nodeSize));
@@ -54,8 +53,7 @@ const handleDeleteTable = ({ editor, parentTable }) => {
 
 // Function to copy the table
 const handleCopyTable = (editor, parentTable) => {
-    console.log("copying table");
-    if (parentTable) {
+    if (parentTable.node) {
         const { tr } = editor.state;
         const tableFragment = tr.doc.slice(parentTable.pos, parentTable.pos + parentTable.node.nodeSize);
         navigator.clipboard.writeText(tableFragment);
@@ -133,6 +131,7 @@ const Tiptap = () => {
 
     const resolvedPos = editor.state.doc.resolve(editor.state.selection.from);
     const parentTable = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
+    console.log("Parent table", parentTable);
 
     return (
         <div>
