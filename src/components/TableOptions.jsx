@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTrashAlt,
     faCopy,
-    faList,
+    faEllipsisH,
 } from '@fortawesome/free-solid-svg-icons';
 import { DOMSerializer } from '@tiptap/pm/model';
 import 'tippy.js/dist/tippy.css';
@@ -69,7 +69,7 @@ const TableOptions = ({ editor, parentTable }) => {
                 <FontAwesomeIcon icon={faCopy} style={iconStyle} />
             </button>
             <button onClick={toggleHeaderOptions} title="Header Options" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                <FontAwesomeIcon icon={faList} style={iconStyle} />
+                <FontAwesomeIcon icon={faEllipsisH} style={iconStyle} />
             </button>
             {showHeaderOptions && (
                 <ToggleHeaderOptions editor={editor} onOptionSelect={handleHeaderOptionSelect} />

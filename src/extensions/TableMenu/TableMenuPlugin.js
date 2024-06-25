@@ -198,6 +198,7 @@ export class TableMenuView {
     }
 
     destroy() {
+        this.hide();
         if (this.tippy?.popper.firstChild) {
             this.tippy.popper.firstChild.removeEventListener(
                 "blur",

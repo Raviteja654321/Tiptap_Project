@@ -51,7 +51,7 @@ const CustomTable = Table.extend({
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
-                                                        addRowAbove(pos + rowIndex);
+                                                        addRowAbove();
                                                     });
     
                                                     button.addEventListener('mouseenter', () => {
@@ -85,7 +85,7 @@ const CustomTable = Table.extend({
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
-                                                        addColumnRight(pos + cellIndex);
+                                                        addColumnRight();
                                                     });
     
                                                     button.addEventListener('mouseenter', () => {

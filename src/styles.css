@@ -20,6 +20,7 @@ th {
   pointer-events: none;
   top: 0;
   width: 3px;
+  z-index: 6;
 }
 
 .resize-cursor {
@@ -98,7 +99,7 @@ th {
   right: -8px;
   top: -20px;
   width: 15px;
-  z-index: 10;
+  z-index: 99;
 }
 
 .add-column-button:hover {
@@ -121,7 +122,7 @@ th {
   bottom: -7px;
   position: absolute;
   width: 15px;
-  z-index: 10;
+  z-index: 99;
 }
 
 .add-row-button:hover {
