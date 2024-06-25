@@ -1,4 +1,4 @@
-import { TableMenuPlugin } from "./table-menu-plugin"
+import { TableMenuPlugin } from "./TableMenuPlugin"
 import React, { useEffect, useState } from "react"
 
 import { useCurrentEditor } from "@tiptap/react"

@@ -1,6 +1,6 @@
 import { Extension } from "@tiptap/core"
 
-import { TableMenuPlugin } from "./table-menu-plugin"
+import { TableMenuPlugin } from "./TableMenuPlugin"
 
 const TableMenuExtension = Extension.create({
     name: "tableMenu",

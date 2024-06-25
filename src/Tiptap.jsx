@@ -12,7 +12,7 @@ import { TableMenu } from './extensions/TableOptions/TableMenu';
 import CustomTable from './extensions/CustomTable';
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
-import TableMenuExtension from './extensions/TableOptions/table-menu';
+import TableMenuExtension from './extensions/TableOptions/TableMenuExtension';
 import { TableOptions, findParentClosestToPos } from './components/TableOptions';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 
