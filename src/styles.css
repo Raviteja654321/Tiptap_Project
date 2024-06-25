@@ -102,7 +102,7 @@ th {
 }
 
 .add-column-button:hover {
-  background-color: #a4a4a4;
+  background-color: rgb(120, 173, 225);
 }
 
 .tiptap.ProseMirror {
@@ -125,7 +125,7 @@ th {
 }
 
 .add-row-button:hover {
-  background-color: #a4a4a4;
+  background-color: rgb(120, 173, 225);
 }
 
 .dot {

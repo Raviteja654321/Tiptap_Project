@@ -25,6 +25,7 @@ const CustomTable = Table.extend({
                 props: {
                     decorations: ({ doc, selection }) => {
                         const decorations = [];
+                        const { from, to } = selection;
                 
                         const addColumnRight = (pos) => {
                             this.editor.chain().focus().addColumnAfter(pos).run();
@@ -35,7 +36,7 @@ const CustomTable = Table.extend({
                         };
                 
                         doc.descendants((node, pos) => {
-                            if (node.type.name === "table") {
+                            if ((node.type.name === "table" && from > pos && to < pos + node.nodeSize && this.editor.isFocused)) {
                                 // Iterate through table rows and columns
                                 node.content.forEach((row, rowIndex) => {
                                     row.content.forEach((cell, cellIndex) => {

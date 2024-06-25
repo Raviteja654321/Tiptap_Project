@@ -34,13 +34,7 @@ const deleteTable = (editor, parentTable) => {
         );
 
         view.dispatch(tr);
-        const position = tr.mapping.map(parentTable.pos + 1);
-
-        view.dispatch(
-            view.state.tr.setSelection(
-                state.selection.constructor.near(view.state.doc.resolve(position))
-            )
-        );
+        editor.commands.focus(parentTable.pos);
     }
 };
 
