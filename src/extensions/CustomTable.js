@@ -27,12 +27,12 @@ const CustomTable = Table.extend({
                         const decorations = [];
                         const { from, to } = selection;
                 
-                        const addColumnRight = (pos) => {
-                            this.editor.chain().focus().addColumnAfter(pos).run();
+                        const addColumnRight = () => {
+                            this.editor.chain().focus().addColumnAfter().run();
                         };
                 
-                        const addRowAbove = (pos) => {
-                            this.editor.chain().focus().addRowAfter(pos).run();
+                        const addRowAbove = () => {
+                            this.editor.chain().focus().addRowAfter().run();
                         };
                 
                         doc.descendants((node, pos) => {

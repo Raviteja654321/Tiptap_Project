@@ -1,5 +1,5 @@
 import './styles.css';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
@@ -8,11 +8,11 @@ import Text from '@tiptap/extension-text';
 import TableRow from '@tiptap/extension-table-row';
 import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
-import { TableMenu } from './extensions/TableOptions/TableMenu';
+import { TableMenu } from './extensions/TableMenu/TableMenu';
 import CustomTable from './extensions/CustomTable';
 import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
-import TableMenuExtension from './extensions/TableOptions/TableMenuExtension';
+import TableMenuExtension from './extensions/TableMenu/TableMenuExtension';
 import { TableOptions, findParentClosestToPos } from './components/TableOptions';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 

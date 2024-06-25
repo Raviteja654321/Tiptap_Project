@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faTrashAlt,
     faCopy,
-    faArrowLeft,
-    faArrowUp,
+    faList,
 } from '@fortawesome/free-solid-svg-icons';
 import { DOMSerializer } from '@tiptap/pm/model';
-import 'tippy.js/dist/tippy.css'; // optional for styling
+import 'tippy.js/dist/tippy.css';
+import ToggleHeaderOptions from './ToggleHeaderOptions';
 
 const iconStyle = { color: '#ffffff', fontSize: '1rem' };
 
@@ -58,15 +58,13 @@ const copyTable = (editor, parentTable) => {
     }
 };
 
-const toggleHeaderRow = (editor) => {
-    editor.chain().focus().toggleHeaderRow().run();
-};
-
-const toggleHeaderColumn = (editor) => {
-    editor.chain().focus().toggleHeaderColumn().run();
-};
-
 const TableOptions = ({ editor, parentTable }) => {
+    const [showHeaderOptions, setShowHeaderOptions] = useState(false);
+
+    const toggleHeaderOptions = () => {
+        setShowHeaderOptions(!showHeaderOptions);
+    };
+    
     return (
         <div className="table-options-menu">
             <button onClick={() => deleteTable(editor, parentTable)} title="Delete Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
@@ -75,12 +73,12 @@ const TableOptions = ({ editor, parentTable }) => {
             <button onClick={() => copyTable(editor, parentTable)} title="Copy Table" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
                 <FontAwesomeIcon icon={faCopy} style={iconStyle} />
             </button>
-            <button onClick={() => toggleHeaderColumn(editor)} title="Toggle Header Column" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                <FontAwesomeIcon icon={faArrowLeft} style={iconStyle} />
+            <button onClick={toggleHeaderOptions} title="Header Options" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
+                <FontAwesomeIcon icon={faList} style={iconStyle} />
             </button>
-            <button onClick={() => toggleHeaderRow(editor)} title="Toggle Header Row" style={{ cursor: 'pointer', border: 'none', background: 'none' }}>
-                <FontAwesomeIcon icon={faArrowUp} style={iconStyle} />
-            </button>
+            {showHeaderOptions && (
+                <ToggleHeaderOptions editor={editor} setShowHeaderOptions={setShowHeaderOptions} />
+            )}
         </div>
     );
 };
