@@ -25,33 +25,34 @@ const CustomTable = Table.extend({
                 props: {
                     decorations: ({ doc, selection }) => {
                         const decorations = [];
-                        const { from, to } = selection;
-                
-                        const addColumnRight = () => {
-                            this.editor.chain().focus().addColumnAfter().run();
+                    
+                        const addColumnRight = (pos) => {
+                            this.editor.chain().focus().setTextSelection(pos).addColumnAfter().run();
                         };
-                
-                        const addRowAbove = () => {
-                            this.editor.chain().focus().addRowAfter().run();
+                    
+                        const addRowAbove = (pos) => {
+                            this.editor.chain().focus().setTextSelection(pos).addRowAfter().run();
                         };
-                
+                    
                         doc.descendants((node, pos) => {
-                            if ((node.type.name === "table" && from > pos && to < pos + node.nodeSize)) {
+                            if ((node.type.name === "table" && selection.from > pos && selection.to < pos + node.nodeSize)) {
                                 // Iterate through table rows and columns
                                 node.content.forEach((row, rowIndex) => {
                                     row.content.forEach((cell, cellIndex) => {
                                         // Add row button
                                         if (cellIndex === 0) {
+                                            const rowButtonPos = pos + cell.nodeSize + rowIndex + 1;
                                             const rowButtonDecoration = Decoration.widget(
-                                                pos + cell.nodeSize + rowIndex + 1,
+                                                rowButtonPos,
                                                 () => {
                                                     const button = document.createElement("button");
                                                     button.className = 'add-row-button';
                                                     button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
+                                                    button.id = `row-button-${rowButtonPos}`;
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
-                                                        addRowAbove();
+                                                        addRowAbove(rowButtonPos);
                                                     });
     
                                                     button.addEventListener('mouseenter', () => {
@@ -73,19 +74,21 @@ const CustomTable = Table.extend({
                                             );
                                             decorations.push(rowButtonDecoration);
                                         }
-                
+    
                                         // Add column button
                                         if (rowIndex === 0) {
+                                            const columnButtonPos = pos + cell.nodeSize + cellIndex + 1;
                                             const columnButtonDecoration = Decoration.widget(
-                                                pos + cell.nodeSize + cellIndex + 1,
+                                                columnButtonPos,
                                                 () => {
                                                     const button = document.createElement("button");
                                                     button.className = 'add-column-button';
                                                     button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
+                                                    button.id = `column-button-${columnButtonPos}`;
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
-                                                        addColumnRight();
+                                                        addColumnRight(columnButtonPos);
                                                     });
     
                                                     button.addEventListener('mouseenter', () => {
@@ -111,13 +114,14 @@ const CustomTable = Table.extend({
                                 });
                             }
                         });
-                
+    
                         return DecorationSet.create(doc, decorations);
                     }
                 }
             })
         ];
     }
+    
 });
 
 export default CustomTable;

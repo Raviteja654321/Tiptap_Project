@@ -1,11 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faArrowLeft,
-    faArrowUp,
-} from '@fortawesome/free-solid-svg-icons';
-
-const iconStyle = { color: '#ffffff', fontSize: '1rem' };
 
 const ToggleHeaderOptions = ({ editor, onOptionSelect }) => {
     const toggleHeaderRow = () => {
