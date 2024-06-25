@@ -25,16 +25,6 @@ const findParentClosestToPos = ($pos, predicate) => {
 
 const deleteTable = (editor, parentTable) => {
     if (parentTable) {
-        // const { state, view } = editor;
-        // const { tr } = state;
-
-        // tr.delete(
-        //     tr.mapping.map(parentTable.pos),
-        //     tr.mapping.map(parentTable.pos + parentTable.node.nodeSize)
-        // );
-
-        // view.dispatch(tr);
-        // editor.commands.focus(parentTable.pos);
         editor.chain().focus().deleteTable().run();
     }
 };
