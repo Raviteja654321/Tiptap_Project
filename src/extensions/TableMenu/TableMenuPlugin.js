@@ -113,8 +113,8 @@ export class TableMenuView {
 
     update(view, oldState) {
         const from = view.state.selection.$from.pos
-        const resolvedPos = this.editor.state.doc.resolve(from);
-        const tableNode = this.findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
+        const resolvedPos = this.editor.state.doc?.resolve(from);
+        const tableNode = (resolvedPos) ? this.findParentClosestToPos(resolvedPos, node => node.type.name === 'table'): null ;
 
         if (this.updateDelay > 0 && tableNode) {
             this.handleDebouncedUpdate(view, oldState)
@@ -180,9 +180,9 @@ export class TableMenuView {
             getReferenceClientRect:
                 this.tippyOptions?.getReferenceClientRect ||
                 (() => {
-                    const resolvedPos = this.editor.state.doc.resolve(from);
-                    const tableNode = this.findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
-                    return posToDOMRect(view, tableNode.pos+1, tableNode.pos+ tableNode.node.content.size)
+                    const resolvedPos = this.editor.state.doc?.resolve(from);
+                    const tableNode = (resolvedPos)?this.findParentClosestToPos(resolvedPos, node => node.type.name === 'table'):null;
+                    return (tableNode) ? posToDOMRect(view, tableNode?.pos+1, tableNode?.pos+ tableNode?.node.content.size): null;
                 })
         })
 

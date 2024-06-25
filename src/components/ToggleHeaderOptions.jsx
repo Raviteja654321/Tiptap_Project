@@ -19,7 +19,7 @@ const ToggleHeaderOptions = ({ editor, onOptionSelect }) => {
     };
 
     return (
-        <div className="toggle-header-options" style={{ position: 'absolute',width: '172px' ,top: '100%', left: 0, top: '32px', backgroundColor: '#333', padding: '5px', borderRadius: '3px' }}>
+        <div className="toggle-header-options" style={{ position: 'absolute',width: '172px', left: 0, top: '32px', backgroundColor: '#333', padding: '5px', borderRadius: '3px' }}>
             <button 
                 onClick={toggleHeaderColumn} 
                 title="Toggle Header Column" 

@@ -35,8 +35,8 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
         setIsFocused(isNodeFocused);
 
         if (isNodeFocused) {
-            const resolvedPos = editor.state.doc.resolve(nodeFrom);
-            const tableNode = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
+            const resolvedPos = editor.state.doc?.resolve(nodeFrom);
+            const tableNode = (resolvedPos) ? findParentClosestToPos(resolvedPos, node => node.type.name === 'table'): null ;
             if (tableNode) {
                 setParentTable(tableNode);
             }

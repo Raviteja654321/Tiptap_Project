@@ -80,8 +80,8 @@ const Tiptap = () => {
         return null;
     }
 
-    const resolvedPos = editor.state.doc.resolve(editor.state.selection.from);
-    const parentTable = findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
+    const resolvedPos = editor.state.doc?.resolve(editor.state.selection.from);
+    const parentTable = (resolvedPos)?findParentClosestToPos(resolvedPos, node => node.type.name === 'table'):null;
 
     return (
         <div>
