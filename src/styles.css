@@ -90,13 +90,14 @@ th {
   background-color: #a4a4a4;
   border: 1px solid #ccc;
   border-radius: 30%;
+  padding: 0px;
   cursor: pointer;
   font-size: 10px;
   height: 15px;
   position: absolute;
   right: -8px;
   top: -20px;
-  width: 10px;
+  width: 15px;
   z-index: 10;
 }
 
@@ -111,14 +112,15 @@ th {
 .add-row-button {
   background-color: #a4a4a4;
   border: 1px solid #ccc;
+  padding: 0px;
   border-radius: 30%;
   cursor: pointer;
   font-size: 10px;
   height: 15px;
-  left: -16px;
+  left: -20px;
   bottom: -8px;
   position: absolute;
-  width: 10px;
+  width: 15px;
   z-index: 10;
 }
 
