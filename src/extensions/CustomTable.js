@@ -36,7 +36,7 @@ const CustomTable = Table.extend({
                         };
                 
                         doc.descendants((node, pos) => {
-                            if ((node.type.name === "table" && from > pos && to < pos + node.nodeSize && this.editor.isFocused)) {
+                            if ((node.type.name === "table" && from > pos && to < pos + node.nodeSize)) {
                                 // Iterate through table rows and columns
                                 node.content.forEach((row, rowIndex) => {
                                     row.content.forEach((cell, cellIndex) => {
