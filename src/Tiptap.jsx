@@ -22,7 +22,6 @@ import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
 import TableMenuExtension from './extensions/TableOptions/table-menu';
 import { DOMSerializer } from '@tiptap/pm/model';
-import Tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // optional for styling
 
 const tableWrapperStyles = {
@@ -46,26 +45,47 @@ const findParentClosestToPos = ($pos, predicate) => {
 
 const handleDeleteTable = (editor, parentTable) => {
     if (parentTable) {
-        const { tr } = editor.state;
-        tr.delete(tr.mapping.map(parentTable.pos), tr.mapping.map(parentTable.pos + parentTable.node.nodeSize));
-        editor.view.dispatch(tr);
+        const { state, view } = editor;
+        const { tr } = state;
+
+        // Delete the table nodes
+        tr.delete(
+            tr.mapping.map(parentTable.pos),
+            tr.mapping.map(parentTable.pos + parentTable.node.nodeSize)
+        );
+
+        // Dispatch the transaction to apply the deletion
+        view.dispatch(tr);
+        const position = tr.mapping.map(parentTable.pos + 1 );
+
+        // Set the cursor to the calculated position
+        view.dispatch(
+            view.state.tr.setSelection(
+                state.selection.constructor.near(view.state.doc.resolve(position))
+            )
+        );
     }
 };
 
+
 const handleCopyTable = (editor, parentTable) => {
     if (parentTable) {
-        const { tr, schema } = editor.state;
+        const { schema } = editor.state;
         const tableNode = parentTable.node;
         const domSerializer = DOMSerializer.fromSchema(schema);
-        
-        //Document fragment from the table node
+
+        // Document fragment from the table node
         const tableFragment = domSerializer.serializeFragment(tableNode.content);
         const tempDiv = document.createElement('div');
         
         tempDiv.appendChild(tableFragment);
-        const htmlString = tempDiv.innerHTML;
+        let htmlString = tempDiv.innerHTML;
+        htmlString = `<table>${htmlString}</table>`;
 
-        navigator.clipboard.writeText(htmlString)
+        const blob = new Blob([htmlString], { type: 'text/html' });
+        const clipboardItem = new ClipboardItem({ 'text/html': blob });
+
+        navigator.clipboard.write([clipboardItem])
     }
 };
 

@@ -98,7 +98,7 @@ export class TableMenuView {
             interactive: true,
             trigger: "manual",
             placement: "bottom",
-            hideOnClick: true,
+            hideOnClick: false,
             ...this.tippyOptions
         })
 
@@ -112,10 +112,11 @@ export class TableMenuView {
     }
 
     update(view, oldState) {
-        const hasValidSelection =
-            true
+        const from = view.state.selection.$from.pos
+        const resolvedPos = this.editor.state.doc.resolve(from);
+        const tableNode = this.findParentClosestToPos(resolvedPos, node => node.type.name === 'table');
 
-        if (this.updateDelay > 0 && hasValidSelection) {
+        if (this.updateDelay > 0 && tableNode) {
             this.handleDebouncedUpdate(view, oldState)
             return
         }
