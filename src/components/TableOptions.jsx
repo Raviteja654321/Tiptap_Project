@@ -64,6 +64,10 @@ const TableOptions = ({ editor, parentTable }) => {
     const toggleHeaderOptions = () => {
         setShowHeaderOptions(!showHeaderOptions);
     };
+
+    const handleHeaderOptionSelect = () => {
+        setShowHeaderOptions(false);
+    };
     
     return (
         <div className="table-options-menu">
@@ -77,7 +81,7 @@ const TableOptions = ({ editor, parentTable }) => {
                 <FontAwesomeIcon icon={faList} style={iconStyle} />
             </button>
             {showHeaderOptions && (
-                <ToggleHeaderOptions editor={editor} setShowHeaderOptions={setShowHeaderOptions} />
+                <ToggleHeaderOptions editor={editor} onOptionSelect={handleHeaderOptionSelect} />
             )}
         </div>
     );
