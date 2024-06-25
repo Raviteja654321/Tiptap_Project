@@ -6,7 +6,7 @@ table {
 
 td,
 th {
-  border: 2px solid #a9b2ba;
+  border: 2px solid #CFD5DA;
   margin: 2px;
   padding: 0px;
   width: 150px;
@@ -87,8 +87,8 @@ th {
 }
 
 .add-column-button {
-  background-color: #a4a4a4;
-  border: 1px solid #ccc;
+  background-color: white;
+  border: 0px solid #ccc;
   border-radius: 30%;
   padding: 0px;
   cursor: pointer;
@@ -110,15 +110,15 @@ th {
 }
 
 .add-row-button {
-  background-color: #a4a4a4;
-  border: 1px solid #ccc;
+  background-color: white;
+  border: 0px solid #ccc;
   padding: 0px;
   border-radius: 30%;
   cursor: pointer;
   font-size: 10px;
   height: 15px;
   left: -20px;
-  bottom: -8px;
+  bottom: -7px;
   position: absolute;
   width: 15px;
   z-index: 10;
@@ -128,3 +128,12 @@ th {
   background-color: #a4a4a4;
 }
 
+.dot {
+  width: 5px;
+  height: 5px;
+  background-color: grey;
+  border-radius: 50%;
+  z-index: 10;
+  position: absolute;
+  right: 5px;
+}

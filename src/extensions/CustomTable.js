@@ -26,12 +26,12 @@ const CustomTable = Table.extend({
                     decorations: ({ doc, selection }) => {
                         const decorations = [];
                 
-                        const addColumnRight = () => {
-                            this.editor.chain().focus().addColumnAfter().run();
+                        const addColumnRight = (pos) => {
+                            this.editor.chain().focus().addColumnAfter(pos).run();
                         };
                 
-                        const addRowAbove = () => {
-                            this.editor.chain().focus().addRowAfter().run();
+                        const addRowAbove = (pos) => {
+                            this.editor.chain().focus().addRowAfter(pos).run();
                         };
                 
                         doc.descendants((node, pos) => {
@@ -41,56 +41,70 @@ const CustomTable = Table.extend({
                                     row.content.forEach((cell, cellIndex) => {
                                         // Add row button
                                         if (cellIndex === 0) {
-                                            const columnButtonDecoration = Decoration.widget(
-                                                cell.nodeSize + rowIndex +1,
+                                            const rowButtonDecoration = Decoration.widget(
+                                                pos + cell.nodeSize + rowIndex + 1,
                                                 () => {
-                                                    // console.log("pos ",pos,"rowindex",rowIndex,"adding column at ", pos+ rowIndex +1 )
                                                     const button = document.createElement("button");
                                                     button.className = 'add-row-button';
-                                                    button.innerHTML = '<i class="fas fa-plus"></i>';
+                                                    button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
                                                         addRowAbove(pos + rowIndex);
                                                     });
-                
+    
+                                                    button.addEventListener('mouseenter', () => {
+                                                        button.innerHTML = '<i class="fas fa-plus"></i>'; // Change to plus icon on hover
+                                                    });
+    
+                                                    button.addEventListener('mouseleave', () => {
+                                                        button.innerHTML = '<div class="dot"></div>'; // Revert back to dot on mouse leave
+                                                    });
+    
                                                     tippy(button, {
                                                         content: 'Add row',
                                                         placement: 'left',
                                                     });
-                
-                                                    return button;
-                                                },
-                                                { side: -1 }
-                                            );
-                                            decorations.push(columnButtonDecoration);
-                                        }
-                
-                                        // Add column button
-                                        if (rowIndex === 0) {
-                                            const rowButtonDecoration = Decoration.widget(
-                                                cell.nodeSize + cellIndex ,
-                                                () => {
-                                                    // console.log("pos ",pos,"cellindex",cellIndex,"adding column at ", pos+ cellIndex +1 )
-                                                    const button = document.createElement("button");
-                                                    button.className = 'add-column-button';
-                                                    button.innerHTML = '<i class="fas fa-plus"></i>';
-                                                    button.addEventListener("click", event => {
-                                                        event.preventDefault();
-                                                        event.stopPropagation();
-                                                        addColumnRight(pos + cellIndex);
-                                                    });
-                
-                                                    tippy(button, {
-                                                        content: 'Add column',
-                                                        placement: 'top',
-                                                    });
-                
+    
                                                     return button;
                                                 },
                                                 { side: -1 }
                                             );
                                             decorations.push(rowButtonDecoration);
+                                        }
+                
+                                        // Add column button
+                                        if (rowIndex === 0) {
+                                            const columnButtonDecoration = Decoration.widget(
+                                                pos + cell.nodeSize + cellIndex + 1,
+                                                () => {
+                                                    const button = document.createElement("button");
+                                                    button.className = 'add-column-button';
+                                                    button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
+                                                    button.addEventListener("click", event => {
+                                                        event.preventDefault();
+                                                        event.stopPropagation();
+                                                        addColumnRight(pos + cellIndex);
+                                                    });
+    
+                                                    button.addEventListener('mouseenter', () => {
+                                                        button.innerHTML = '<i class="fas fa-plus"></i>'; // Change to plus icon on hover
+                                                    });
+    
+                                                    button.addEventListener('mouseleave', () => {
+                                                        button.innerHTML = '<div class="dot"></div>'; // Revert back to dot on mouse leave
+                                                    });
+    
+                                                    tippy(button, {
+                                                        content: 'Add column',
+                                                        placement: 'top',
+                                                    });
+    
+                                                    return button;
+                                                },
+                                                { side: -1 }
+                                            );
+                                            decorations.push(columnButtonDecoration);
                                         }
                                     });
                                 });
