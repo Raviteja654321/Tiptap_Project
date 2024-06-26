@@ -18,6 +18,7 @@ const CustomTable = Table.extend({
     },
     addProseMirrorPlugins() {
         return [
+            ...this.parent?.(),
             new Plugin({
                 key: new PluginKey("addRowColumnButton"),
                 props: {
