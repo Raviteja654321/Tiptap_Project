@@ -19,7 +19,6 @@ const tableWrapperStyles = {
     border: '2px solid #ced4da',
     padding: '50px',
     overflowX: 'auto',
-    height: '50vh'
 };
 
 const Tiptap = () => {
