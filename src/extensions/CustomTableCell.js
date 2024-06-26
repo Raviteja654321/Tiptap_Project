@@ -25,6 +25,7 @@ const CustomTableCell = TableCell.extend({
 
     addAttributes() {
         return {
+            ...this.parent?.(),
             colwidth: {
                 default: null,
                 renderHTML: attributes => {

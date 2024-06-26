@@ -21,6 +21,7 @@ const CustomTableHeader = TableHeader.extend({
 
     addAttributes() {
         return {
+            ...this.parent?.(),
             width: {
                 default: '150px',
                 renderHTML: (attributes) => {

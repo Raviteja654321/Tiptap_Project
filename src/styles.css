@@ -75,7 +75,7 @@ th {
   position: relative;
 }
 
-.tableCell.ProseMirror-selectednode:after {
+.selectedCell::after{
   background: rgba(159, 159, 218, 0.4);
   content: "";
   left: 0;
