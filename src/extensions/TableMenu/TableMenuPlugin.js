@@ -19,16 +19,13 @@ export class TableMenuView {
     };
 
     shouldShow = ({ view, state, from, to }) => {
-
-        // When clicking on a element inside the Table menu the editor "blur" event
-        // is called and the Table menu item is focussed. In this case we should
-        // consider the menu as part of the editor and keep showing the menu
+        // Check if the editor is focused or if the menu is a child of the active element
         const isChildOfMenu = this.element.contains(document.activeElement)
         const hasEditorFocus = view.hasFocus() || isChildOfMenu
-        if(!hasEditorFocus || !this.editor.isEditable)
-        {
+        if (!hasEditorFocus || !this.editor.isEditable) {
             return false;
         }
+        // Ensure that the selection is within a table
         return this.editor.isActive('table');
     }
 
@@ -68,6 +65,8 @@ export class TableMenuView {
     }
 
     focusHandler = () => {
+        // Reinitialize the Tippy instance when the editor regains focus
+        // this.createTooltip()
         // we use `setTimeout` to make sure `selection` is already updated
         setTimeout(() => this.update(this.editor.view))
     }
@@ -75,7 +74,6 @@ export class TableMenuView {
     blurHandler = ({ event }) => {
         if (this.preventHide) {
             this.preventHide = false
-
             return
         }
 
@@ -182,8 +180,6 @@ export class TableMenuView {
 
         if (!shouldShow) {
             this.hide()
-            this.element.remove();
-
             return
         }
 

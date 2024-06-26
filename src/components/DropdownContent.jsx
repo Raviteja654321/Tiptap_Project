@@ -19,6 +19,7 @@ const DropdownContent = ({ editor, getPos, node, closeDropdown }) => {
     // Set the background color of the cell
     const setBackgroundColor = (color) => {
         editor.chain().focus().setCellAttribute('backgroundColor', color).run();
+        closeDropdown();
     };
 
     // Clear the content of the cell
