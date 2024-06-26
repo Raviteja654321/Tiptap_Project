@@ -1,8 +1,6 @@
 import Table from '@tiptap/extension-table';
 import { Plugin, PluginKey } from "@tiptap/pm/state";
 import { Decoration, DecorationSet } from "@tiptap/pm/view";
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
 const CustomTable = Table.extend({
@@ -25,15 +23,17 @@ const CustomTable = Table.extend({
                 props: {
                     decorations: ({ doc, selection }) => {
                         const decorations = [];
-                    
+    
                         const addColumnRight = (pos) => {
-                            this.editor.chain().focus().setTextSelection(pos).addColumnAfter().run();
+                            this.editor.commands.setTextSelection(pos);
+                            this.editor.chain().focus().addColumnAfter().run();
                         };
-                    
-                        const addRowAbove = (pos) => {
-                            this.editor.chain().focus().setTextSelection(pos).addRowAfter().run();
+    
+                        const addRowBelow = (pos) => {
+                            this.editor.commands.setTextSelection(pos);
+                            this.editor.chain().focus().addRowAfter().run();
                         };
-                    
+    
                         doc.descendants((node, pos) => {
                             if ((node.type.name === "table" && selection.from > pos && selection.to < pos + node.nodeSize)) {
                                 // Iterate through table rows and columns
@@ -49,10 +49,11 @@ const CustomTable = Table.extend({
                                                     button.className = 'add-row-button';
                                                     button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
                                                     button.id = `row-button-${rowButtonPos}`;
+                                                    button.title = 'Add row'; // Tooltip using the title attribute
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
-                                                        addRowAbove(rowButtonPos);
+                                                        addRowBelow(rowButtonPos);
                                                     });
     
                                                     button.addEventListener('mouseenter', () => {
@@ -61,11 +62,6 @@ const CustomTable = Table.extend({
     
                                                     button.addEventListener('mouseleave', () => {
                                                         button.innerHTML = '<div class="dot"></div>'; // Revert back to dot on mouse leave
-                                                    });
-    
-                                                    tippy(button, {
-                                                        content: 'Add row',
-                                                        placement: 'left',
                                                     });
     
                                                     return button;
@@ -85,6 +81,7 @@ const CustomTable = Table.extend({
                                                     button.className = 'add-column-button';
                                                     button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
                                                     button.id = `column-button-${columnButtonPos}`;
+                                                    button.title = 'Add column'; // Tooltip using the title attribute
                                                     button.addEventListener("click", event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
@@ -92,16 +89,11 @@ const CustomTable = Table.extend({
                                                     });
     
                                                     button.addEventListener('mouseenter', () => {
-                                                        button.innerHTML = '<i class="fas fa-plus"></i>'; // Change to plus icon on hover
+                                                        button.innerHTML = '<i class="fas fa-plus"></i>'; // Change to plus icon on hover 
                                                     });
     
                                                     button.addEventListener('mouseleave', () => {
                                                         button.innerHTML = '<div class="dot"></div>'; // Revert back to dot on mouse leave
-                                                    });
-    
-                                                    tippy(button, {
-                                                        content: 'Add column',
-                                                        placement: 'top',
                                                     });
     
                                                     return button;
@@ -120,8 +112,7 @@ const CustomTable = Table.extend({
                 }
             })
         ];
-    }
-    
+    }    
 });
 
 export default CustomTable;

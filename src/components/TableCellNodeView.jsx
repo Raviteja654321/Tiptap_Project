@@ -31,7 +31,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
     const nodeTo = nodeFrom + node.nodeSize;
 
     useEffect(() => {
-        const isNodeFocused = from >= nodeFrom && to <= nodeTo;
+        const isNodeFocused = (from >= nodeFrom && to <= nodeTo);
         setIsFocused(isNodeFocused);
 
         if (isNodeFocused) {
@@ -128,7 +128,6 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     </button>
                 </>
             )}
-            {/* <TableOptionsBubbleMenu editor={editor} parentTable={parentTable} isVisible={isFocused} getPos={getPos}/> */}
         </NodeViewWrapper>
     );
 };
