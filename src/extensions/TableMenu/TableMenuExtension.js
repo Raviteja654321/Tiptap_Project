@@ -21,6 +21,7 @@ const TableMenuExtension = Extension.create({
         }
 
         return [
+            ...this.parent?.(),
             TableMenuPlugin({
                 pluginKey: this.options.pluginKey,
                 editor: this.editor,
