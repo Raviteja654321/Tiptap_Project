@@ -23,29 +23,40 @@ const findParentClosestToPos = ($pos, predicate) => {
     return undefined;
 };
 
-const deleteTable = (editor, parentTable) => {
+const measurePerformance = async (operationName, operation) => {
+    const start = performance.now();
+    await operation();
+    const end = performance.now();
+    console.log(`${operationName} took ${end - start}ms`);
+};
+
+const deleteTable = async (editor, parentTable) => {
     if (parentTable) {
-        editor.chain().focus().deleteTable().run();
+        await measurePerformance('deleteTable', async () => {
+            editor.chain().focus().deleteTable().run();
+        });
     }
 };
 
-const copyTable = (editor, parentTable) => {
+const copyTable = async (editor, parentTable) => {
     if (parentTable) {
-        const { schema } = editor.state;
-        const tableNode = parentTable.node;
-        const domSerializer = DOMSerializer.fromSchema(schema);
+        await measurePerformance('copyTable', async () => {
+            const { schema } = editor.state;
+            const tableNode = parentTable.node;
+            const domSerializer = DOMSerializer.fromSchema(schema);
 
-        const tableFragment = domSerializer.serializeFragment(tableNode.content);
-        const tempDiv = document.createElement('div');
+            const tableFragment = domSerializer.serializeFragment(tableNode.content);
+            const tempDiv = document.createElement('div');
 
-        tempDiv.appendChild(tableFragment);
-        let htmlString = tempDiv.innerHTML;
-        htmlString = `<table>${htmlString}</table>`;
+            tempDiv.appendChild(tableFragment);
+            let htmlString = tempDiv.innerHTML;
+            htmlString = `<table>${htmlString}</table>`;
 
-        const blob = new Blob([htmlString], { type: 'text/html' });
-        const clipboardItem = new ClipboardItem({ 'text/html': blob });
+            const blob = new Blob([htmlString], { type: 'text/html' });
+            const clipboardItem = new ClipboardItem({ 'text/html': blob });
 
-        navigator.clipboard.write([clipboardItem]);
+            await navigator.clipboard.write([clipboardItem]);
+        });
     }
 };
 

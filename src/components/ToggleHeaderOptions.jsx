@@ -1,13 +1,24 @@
 import React from 'react';
 
+const measurePerformance = async (operationName, operation) => {
+    const start = performance.now();
+    await operation();
+    const end = performance.now();
+    console.log(`${operationName} took ${end - start}ms`);
+};
+
 const ToggleHeaderOptions = ({ editor, onOptionSelect }) => {
-    const toggleHeaderRow = () => {
-        editor.chain().focus().toggleHeaderRow().run();
+    const toggleHeaderRow = async () => {
+        await measurePerformance('toggleHeaderRow', async () => {
+            editor.chain().focus().toggleHeaderRow().run();
+        });
         onOptionSelect();
     };
 
-    const toggleHeaderColumn = () => {
-        editor.chain().focus().toggleHeaderColumn().run();
+    const toggleHeaderColumn = async () => {
+        await measurePerformance('toggleHeaderColumn', async () => {
+            editor.chain().focus().toggleHeaderColumn().run();
+        });
         onOptionSelect();
     };
 

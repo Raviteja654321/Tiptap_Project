@@ -89,7 +89,7 @@ const Tiptap = () => {
 
     return (
         <div>
-            <h1 style={{marginLeft:'40px', marginLeft: '40%'}}>Tiptap Interactive Table! </h1>
+            <h1 style={{marginLeft:'40px'}}>Tiptap Interactive Table! </h1>
             <button
                 onClick={() => editor.chain().focus().insertTable({ rows: 4, cols: 3, withHeaderRow: true }).run()}
                 style={{
