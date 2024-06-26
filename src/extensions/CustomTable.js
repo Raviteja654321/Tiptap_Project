@@ -26,13 +26,15 @@ const CustomTable = Table.extend({
                         const decorations = [];
     
                         const addColumnRight = (pos) => {
+                            console.log("Add column right clicked");
                             this.editor.commands.setTextSelection(pos);
-                            this.editor.chain().focus().addColumnAfter().run();
+                            this.editor.chain().focus(pos).addColumnAfter().run();
                         };
     
                         const addRowBelow = (pos) => {
+                            console.log("Add row below clicked");
                             this.editor.commands.setTextSelection(pos);
-                            this.editor.chain().focus().addRowAfter().run();
+                            this.editor.chain().focus(pos).addRowAfter().run();
                         };
     
                         doc.descendants((node, pos) => {
@@ -51,11 +53,11 @@ const CustomTable = Table.extend({
                                                     button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
                                                     button.id = `row-button-${rowButtonPos}`;
                                                     button.title = 'Add row'; // Tooltip using the title attribute
-                                                    button.addEventListener("click", event => {
+                                                    button.onclick = event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
                                                         addRowBelow(rowButtonPos);
-                                                    });
+                                                    };
     
                                                     button.addEventListener('mouseenter', () => {
                                                         button.innerHTML = '<i class="fas fa-plus"></i>'; // Change to plus icon on hover
@@ -83,11 +85,11 @@ const CustomTable = Table.extend({
                                                     button.innerHTML = '<div class="dot"></div>'; // Initially display a dot
                                                     button.id = `column-button-${columnButtonPos}`;
                                                     button.title = 'Add column'; // Tooltip using the title attribute
-                                                    button.addEventListener("click", event => {
+                                                    button.onclick = event => {
                                                         event.preventDefault();
                                                         event.stopPropagation();
                                                         addColumnRight(columnButtonPos);
-                                                    });
+                                                    };
     
                                                     button.addEventListener('mouseenter', () => {
                                                         button.innerHTML = '<i class="fas fa-plus"></i>'; // Change to plus icon on hover 
