@@ -6,7 +6,7 @@ const CustomTableHeader = TableHeader.extend({
             ...this.parent?.(),
             HTMLAttributes: {
                 style: `
-                    background-color: #2D323B;
+                    background-color: #373A40;
                     color: #ffffff;
                     font-weight: bold;
                     text-align: center;
