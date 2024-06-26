@@ -14,14 +14,11 @@ import { colorOptions } from '../utils/colorOptions';
 
 
 
-const DropdownContent = ({ editor, getPos, node, cell, closeDropdown }) => {
+const DropdownContent = ({ editor, getPos, node, closeDropdown }) => {
 
     // Set the background color of the cell
     const setBackgroundColor = (color) => {
         editor.chain().focus().setCellAttribute('backgroundColor', color).run();
-        if (cell) {
-            cell.style.backgroundColor = color;
-        }
     };
 
     // Clear the content of the cell

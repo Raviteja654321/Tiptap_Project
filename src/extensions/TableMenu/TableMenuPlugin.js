@@ -19,6 +19,16 @@ export class TableMenuView {
     };
 
     shouldShow = ({ view, state, from, to }) => {
+
+        // When clicking on a element inside the Table menu the editor "blur" event
+        // is called and the Table menu item is focussed. In this case we should
+        // consider the menu as part of the editor and keep showing the menu
+        const isChildOfMenu = this.element.contains(document.activeElement)
+        const hasEditorFocus = view.hasFocus() || isChildOfMenu
+        if(!hasEditorFocus || !this.editor.isEditable)
+        {
+            return false;
+        }
         return this.editor.isActive('table');
     }
 
@@ -172,6 +182,7 @@ export class TableMenuView {
 
         if (!shouldShow) {
             this.hide()
+            this.element.remove();
 
             return
         }

@@ -22,7 +22,6 @@ const findParentClosestToPos = ($pos, predicate) => {
 
 const TableCellNodeView = ({ editor, getPos, node }) => {
     const [isFocused, setIsFocused] = useState(false);
-    const [cell, setCell] = useState(null);
     const dropdownButtonRef = useRef(null);
     const [parentTable, setParentTable] = useState(null);
 
@@ -52,7 +51,6 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                     editor,
                     getPos,
                     node,
-                    cell,
                     parentTable,
                     closeDropdown: () => {
                         if (tippyInstance) {
@@ -81,7 +79,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 }
             };
         }
-    }, [isFocused, editor, getPos, node, cell, parentTable]);
+    }, [isFocused, editor, getPos, node, parentTable]);
 
     return (
         <NodeViewWrapper
@@ -90,9 +88,6 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 setIsFocused(true);
             }}
             onMouseEnter={(event) => {
-                if (event.target.tagName === 'DIV') {
-                    setCell(event.target);
-                }
                 setIsFocused(from >= nodeFrom && to <= nodeTo);
             }}
             onMouseLeave={() => {
@@ -103,6 +98,7 @@ const TableCellNodeView = ({ editor, getPos, node }) => {
                 width: '100%',
                 position: 'relative',
                 height: 'auto',
+                backgroundColor: node.attrs.backgroundColor || 'transparent',
             }}>
             <NodeViewContent className="content" style={{ width: '100%', margin: '0', padding: '0' }} />
             {isFocused && (

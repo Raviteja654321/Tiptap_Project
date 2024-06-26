@@ -14,7 +14,6 @@ import CustomTableHeader from './extensions/CustomTableHeader';
 import CustomTableCell from './extensions/CustomTableCell';
 import TableMenuExtension from './extensions/TableMenu/TableMenuExtension';
 import { TableOptions, findParentClosestToPos } from './components/TableOptions';
-import 'tippy.js/dist/tippy.css'; // optional for styling
 
 const tableWrapperStyles = {
     border: '2px solid #ced4da',

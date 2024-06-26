@@ -31,7 +31,7 @@ const CustomTableCell = TableCell.extend({
                 renderHTML: attributes => {
                     return {
                         colwidth: attributes.colwidth,
-                        style: attributes.style ? `width: ${attributes.colwidth}px` : null
+                        style: attributes.colwidth ? `width: ${attributes.colwidth}px` : null
                     };
                 },
                 parseHTML: (element) => {
@@ -75,9 +75,10 @@ const CustomTableCell = TableCell.extend({
     },
 
     renderHTML({ HTMLAttributes }) {
+        const style = `${HTMLAttributes.style || ''} ${HTMLAttributes.backgroundColor ? `background-color: ${HTMLAttributes.backgroundColor};` : ''}`;
         return [
             "td",
-            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+            mergeAttributes(this.options.HTMLAttributes, HTMLAttributes, { style }),
             0,
         ];
     },
