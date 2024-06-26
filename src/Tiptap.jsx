@@ -19,7 +19,6 @@ const tableWrapperStyles = {
     border: '2px solid #ced4da',
     padding: '0px',
     overflowX: 'auto',
-    fontFamily: 'bogle',
 };
 
 const Tiptap = () => {
